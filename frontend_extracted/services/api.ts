@@ -712,5 +712,41 @@ export const api = {
 
         if (error) throw error;
         return { success: true };
+    },
+
+    /**
+     * Obtiene los SKUs únicos que tienen registros en la tabla sap_produccion.
+     * Se usa para filtrar globalmente y mostrar solo SKUs con historial de producción.
+     */
+    getProductionSkuIds: async (): Promise<Set<string>> => {
+        let allIds: string[] = [];
+        let page = 0;
+        const pageSize = 1000;
+        let hasMore = true;
+
+        while (hasMore) {
+            const { data, error } = await supabase
+                .from('sap_produccion')
+                .select('material')
+                .range(page * pageSize, (page + 1) * pageSize - 1);
+
+            if (error) {
+                console.error('Error fetching production SKU IDs:', error);
+                throw error;
+            }
+
+            if (data && data.length > 0) {
+                allIds.push(...data.map((d: any) => d.material));
+                if (data.length < pageSize) hasMore = false;
+                page++;
+            } else {
+                hasMore = false;
+            }
+        }
+
+        // Normalizar: eliminar ceros iniciales para matching con maestro
+        const uniqueIds = new Set(allIds.map(id => (id || '').toString().replace(/^0+/, '')));
+        console.log(`Production SKU filter: ${uniqueIds.size} unique SKUs from sap_produccion`);
+        return uniqueIds;
     }
 };

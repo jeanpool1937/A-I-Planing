@@ -237,8 +237,22 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       // Actualizar estados y Persistir en IndexedDB (Supera límite 5MB de LocalStorage)
       if (maestroData) {
-        setRawMaestro(maestroData);
-        cacheService.set(`cache_maestro_${selectedCountry}`, maestroData);
+        let filteredMaestro = [...maestroData];
+        try {
+          const productionSkuIds = await api.getProductionSkuIds();
+          const beforeCount = filteredMaestro.length;
+          filteredMaestro = filteredMaestro.filter((item: any) => {
+            const normId = (item.codigo || '').toString().replace(/^0+/, '');
+            return productionSkuIds.has(normId);
+          });
+          addLog(`Filtro Producción: ${filteredMaestro.length} de ${beforeCount} SKUs tienen historial de producción`);
+        } catch (e: any) {
+          console.warn("Error fetching production SKU filter, showing all SKUs", e);
+          addLog("Advertencia: No se pudo aplicar filtro de producción: " + e.message);
+        }
+
+        setRawMaestro(filteredMaestro);
+        cacheService.set(`cache_maestro_${selectedCountry}`, filteredMaestro);
       }
       if (aggregates) {
         setRawAggregatedConsumption(aggregates);
