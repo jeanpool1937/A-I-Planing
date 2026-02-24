@@ -687,5 +687,30 @@ export const api = {
             produccion: produccion || [],
             programa: (programa.data as any[]) || []
         };
+    },
+
+    /**
+     * Persiste los datos calculados del Reporte Maestro en la tabla consolidada.
+     */
+    upsertReporteMaestro: async (records: any[]) => {
+        // 1. Limpiar datos existentes (Truncate manual vía Delete)
+        // Nota: Solo borramos si el batch es el primero o si se decide hacer un reset total inicial
+        // Para simplificar desde el front, el componente llamará a un delete inicial y luego mandará batches.
+        const { error } = await supabase
+            .from('sap_reporte_maestro')
+            .upsert(records, { onConflict: 'sku_id' });
+
+        if (error) throw error;
+        return { success: true };
+    },
+
+    clearReporteMaestro: async () => {
+        const { error } = await supabase
+            .from('sap_reporte_maestro')
+            .delete()
+            .neq('sku_id', '0'); // Delete all
+
+        if (error) throw error;
+        return { success: true };
     }
 };

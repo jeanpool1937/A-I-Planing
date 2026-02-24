@@ -11,6 +11,8 @@ interface MasterReportProps {
 export const MasterReport: React.FC<MasterReportProps> = ({ filteredSkus }) => {
     const { isBackendOnline, addLog, rawAggregatedConsumption, rawHybridPlanning } = useData();
     const [loading, setLoading] = useState(false);
+    const [syncing, setSyncing] = useState(false);
+    const [syncProgress, setSyncProgress] = useState({ current: 0, total: 0 });
     const [reportData, setReportData] = useState<{ movimientos: any[], produccion: any[], programa: any[] } | null>(null);
 
     // Calculate current and next month strings
@@ -181,6 +183,55 @@ export const MasterReport: React.FC<MasterReportProps> = ({ filteredSkus }) => {
         addLog("Reporte exportado correctamente.");
     };
 
+    const syncToDatabase = async () => {
+        if (!reportRecords.length) return;
+
+        setSyncing(true);
+        setSyncProgress({ current: 0, total: reportRecords.length });
+        addLog("Iniciando sincronización manual con Supabase...");
+
+        try {
+            // 1. Limpiar tabla primero
+            await api.clearReporteMaestro();
+
+            // 2. Batching (Lotes de 500)
+            const BATCH_SIZE = 500;
+            const records = reportRecords.map(r => ({
+                sku_id: r.sku,
+                descripcion: r.desc,
+                po_mes_actual: r.poActual,
+                coverage_initial: r.coverageInitial,
+                stock_inicio_mes: r.initialStock,
+                real_venta_consumo: r.realConsumo,
+                real_fabricado: r.realFabricado,
+                stock_hoy: r.stockHoy,
+                coverage_actual: r.coverageActual,
+                projected_venta_consumo: r.projectedConsumo,
+                projected_fabricado: r.projectedFabricado,
+                stock_fin_mes: r.stockFinMes,
+                po_prox_mes: r.poProxMes,
+                coverage_final: r.coverageFinal,
+                updated_at: new Date().toISOString()
+            }));
+
+            for (let i = 0; i < records.length; i += BATCH_SIZE) {
+                const batch = records.slice(i, i + BATCH_SIZE);
+                await api.upsertReporteMaestro(batch);
+                setSyncProgress(prev => ({ ...prev, current: Math.min(i + BATCH_SIZE, records.length) }));
+            }
+
+            addLog("¡Sincronización exitosa! Los datos están en Supabase.");
+            alert("Los datos del reporte han sido persistidos correctamente en la base de datos.");
+        } catch (error: any) {
+            console.error("Sync error:", error);
+            addLog(`Error en sincronización: ${error.message}`);
+            alert("Hubo un error al intentar guardar los datos.");
+        } finally {
+            setSyncing(false);
+            setSyncProgress({ current: 0, total: 0 });
+        }
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center bg-dark-900/50 p-4 rounded-xl border border-slate-800">
@@ -188,13 +239,37 @@ export const MasterReport: React.FC<MasterReportProps> = ({ filteredSkus }) => {
                     <span className="material-symbols-rounded text-primary-500">info</span>
                     <p className="text-sm text-slate-300">Este reporte proyecta el stock al cierre de mes considerando el **Factor de Estacionalidad (FEI)**.</p>
                 </div>
-                <button
-                    onClick={exportToExcel}
-                    className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors shadow-lg shadow-emerald-600/20 font-medium text-sm"
-                >
-                    <span className="material-symbols-rounded text-lg">download</span>
-                    Exportar Excel (.xlsx)
-                </button>
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={syncToDatabase}
+                        disabled={syncing || reportRecords.length === 0}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all font-medium text-sm shadow-lg overflow-hidden relative ${syncing
+                                ? 'bg-slate-800 text-slate-400 cursor-wait'
+                                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20'
+                            }`}
+                    >
+                        {syncing && (
+                            <div
+                                className="absolute bottom-0 left-0 h-1 bg-indigo-400 transition-all duration-300"
+                                style={{ width: `${(syncProgress.current / syncProgress.total) * 100}%` }}
+                            />
+                        )}
+                        <span className={`material-symbols-rounded text-lg ${syncing ? 'animate-spin' : ''}`}>
+                            {syncing ? 'sync' : 'cloud_upload'}
+                        </span>
+                        {syncing
+                            ? `Sincronizando ${syncProgress.current}/${syncProgress.total}...`
+                            : 'Sincronizar con DB'
+                        }
+                    </button>
+                    <button
+                        onClick={exportToExcel}
+                        className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors shadow-lg shadow-emerald-600/20 font-medium text-sm"
+                    >
+                        <span className="material-symbols-rounded text-lg">download</span>
+                        Exportar Excel (.xlsx)
+                    </button>
+                </div>
             </div>
 
             <div className="bg-dark-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl">

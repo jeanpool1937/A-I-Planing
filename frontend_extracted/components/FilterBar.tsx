@@ -14,6 +14,8 @@ interface FilterBarProps {
     setShowManufacturedOnly: (val: boolean) => void;
     showOnlyPlanned: boolean;
     setShowOnlyPlanned: (val: boolean) => void;
+    searchQuery: string;
+    setSearchQuery: (val: string) => void;
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
@@ -27,7 +29,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     showManufacturedOnly,
     setShowManufacturedOnly,
     showOnlyPlanned,
-    setShowOnlyPlanned
+    setShowOnlyPlanned,
+    searchQuery,
+    setSearchQuery
 }) => {
     const { processMap } = useData();
 
@@ -56,7 +60,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         )
     ).sort();
 
-    const activeCount = (selectedJerarquia ? 1 : 0) + (selectedGrupo ? 1 : 0) + (selectedProceso.length > 0 ? 1 : 0) + (showManufacturedOnly ? 1 : 0) + (showOnlyPlanned ? 1 : 0);
+    const activeCount = (selectedJerarquia ? 1 : 0) + (selectedGrupo ? 1 : 0) + (selectedProceso.length > 0 ? 1 : 0) + (showManufacturedOnly ? 1 : 0) + (showOnlyPlanned ? 1 : 0) + (searchQuery ? 1 : 0);
 
     return (
         <div className="flex flex-wrap items-center gap-3 bg-dark-900 border border-slate-800 rounded-xl px-4 py-3 mb-6">
@@ -67,6 +71,28 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     <span className="w-5 h-5 rounded-full bg-primary-600 text-white text-[10px] font-bold flex items-center justify-center">
                         {activeCount}
                     </span>
+                )}
+            </div>
+
+            {/* Buscador de SKU/Descripción */}
+            <div className="relative flex-1 min-w-[250px]">
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    placeholder="Buscar por código o descripción..."
+                    className="w-full bg-slate-800 border border-slate-700 text-sm text-white rounded-lg pl-10 pr-4 py-1.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                />
+                <span className="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg pointer-events-none">
+                    search
+                </span>
+                {searchQuery && (
+                    <button
+                        onClick={() => setSearchQuery('')}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                    >
+                        <span className="material-symbols-rounded text-sm">close</span>
+                    </button>
                 )}
             </div>
 
@@ -164,6 +190,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                         setSelectedProceso([]);
                         setShowManufacturedOnly(false);
                         setShowOnlyPlanned(false);
+                        setSearchQuery('');
                     }}
                     className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1 px-2 py-1 bg-red-500/10 rounded-lg border border-red-500/20 transition-colors"
                 >
@@ -180,7 +207,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                         (!selectedGrupo || s.grupoArticulosDesc === selectedGrupo) &&
                         (selectedProceso.length === 0 || selectedProceso.some(p => (s.procesos || '').includes(p))) &&
                         (!showManufacturedOnly || (s.procesos && s.procesos.length > 0)) &&
-                        (!showOnlyPlanned || (s.forecast && s.forecast.some(f => f > 0)))
+                        (!showOnlyPlanned || (s.forecast && s.forecast.some(f => f > 0))) &&
+                        (!searchQuery ||
+                            (s.id || '').toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            (s.name || '').toLowerCase().includes(searchQuery.toLowerCase())
+                        )
                     ).length}
                 </span>
                 <span> de {skus.length} SKUs</span>

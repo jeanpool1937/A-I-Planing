@@ -41,11 +41,15 @@ class DataValidator:
         try:
             # Obtener MB52
             resp_mb52 = requests.get(f"{SUPABASE_URL}/rest/v1/sap_stock_mb52?select=material,libre_utilizacion", headers=self.headers)
-            # Obtener Buffers (Usando la tabla correcta sap_plan_inventario_hibrido)
-            resp_buffers = requests.get(f"{SUPABASE_URL}/rest/v1/sap_plan_inventario_hibrido?select=sku_id,adu,abc_ton_val", headers=self.headers)
+            # Obtener Buffers (Usando la tabla correcta sap_plan_inventario_hibrido con columnas reales)
+            # adu -> adu_hibrido_final
+            resp_buffers = requests.get(f"{SUPABASE_URL}/rest/v1/sap_plan_inventario_hibrido?select=sku_id,adu_hibrido_final,abc_segment", headers=self.headers)
             
-            if resp_mb52.status_code != 200 or resp_buffers.status_code != 200:
-                self.log_issue("Alta", "API", "Error al consultar tablas de inventario en Supabase", "No se puede auditar el stock")
+            if resp_mb52.status_code != 200:
+                self.log_issue("Alta", "API", f"Error MB52: {resp_mb52.status_code} - {resp_mb52.text}", "No se puede auditar el stock")
+                return
+            if resp_buffers.status_code != 200:
+                self.log_issue("Alta", "API", f"Error Buffers: {resp_buffers.status_code} - {resp_buffers.text}", "No se puede auditar el stock")
                 return
 
             mb52_data = {item['material']: item['libre_utilizacion'] for item in resp_mb52.json()}
@@ -54,8 +58,10 @@ class DataValidator:
             for sku, stock in mb52_data.items():
                 if sku in buffers_data:
                     buf = buffers_data[sku]
-                    if buf['adu'] < 0:
-                        self.log_issue("Crítica", "Integridad", f"SKU {sku} tiene ADU negativo: {buf['adu']}", "Cálculos de buffer erróneos")
+                    # Validar ADU negativo (usando adu_hibrido_final)
+                    adu = buf.get('adu_hibrido_final', 0)
+                    if adu < 0:
+                        self.log_issue("Crítica", "Integridad", f"SKU {sku} tiene ADU negativo: {adu}", "Cálculos de buffer erróneos")
                     
                     if stock < 0:
                         self.log_issue("Crítica", "Dato SAP", f"SKU {sku} tiene stock negativo en MB52: {stock}", "Inconsistencia en ERP o carga")

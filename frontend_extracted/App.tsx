@@ -48,13 +48,18 @@ const AppContent: React.FC = () => {
   const [selectedProceso, setSelectedProceso] = useState<string[]>([]);
   const [showManufacturedOnly, setShowManufacturedOnly] = useState(false);
   const [showOnlyPlanned, setShowOnlyPlanned] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const filteredSkus = skus.filter(s =>
     (!selectedJerarquia || s.jerarquia1 === selectedJerarquia) &&
     (!selectedGrupo || s.grupoArticulosDesc === selectedGrupo) &&
     (selectedProceso.length === 0 || selectedProceso.some(p => (s.procesos || '').includes(p))) &&
     (!showManufacturedOnly || (s.procesos && s.procesos.length > 0)) &&
-    (!showOnlyPlanned || (s.forecast && s.forecast.some(f => f > 0)))
+    (!showOnlyPlanned || (s.forecast && s.forecast.some(f => f > 0))) &&
+    (!searchQuery ||
+      (s.id || '').toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (s.name || '').toLowerCase().includes(searchQuery.toLowerCase())
+    )
   );
 
   const showFilterBar = [View.DASHBOARD, View.DEMAND, View.INVENTORY, View.SUPPLY, View.PROJECTION, View.MASTER_REPORT].includes(currentView);
@@ -195,6 +200,8 @@ const AppContent: React.FC = () => {
               setShowManufacturedOnly={setShowManufacturedOnly}
               showOnlyPlanned={showOnlyPlanned}
               setShowOnlyPlanned={setShowOnlyPlanned}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
             />
           )}
           {renderContent()}

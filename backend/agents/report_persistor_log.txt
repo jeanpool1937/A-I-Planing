@@ -1,0 +1,36 @@
+2026-02-18 15:23:09,701 - INFO - --- Iniciando persistencia de Reporte Maestro ---
+2026-02-18 15:23:09,701 - INFO - Reporte para 2026-02. Días restantes en mes: 10
+2026-02-18 15:23:09,701 - INFO - Descargando datos de Supabase...
+2026-02-18 15:23:28,263 - INFO - Procesando cálculos dinámicos...
+2026-02-18 15:23:28,298 - INFO - Limpiando tabla sap_reporte_maestro...
+2026-02-18 15:23:28,810 - INFO - Insertando nuevos datos consolidado...
+2026-02-18 15:23:29,496 - ERROR - Falla crítica en run_report_persistence: 401 Client Error: Unauthorized for url: https://nvrcsheavwwrcukhtvcw.supabase.co/rest/v1/sap_reporte_maestro
+Traceback (most recent call last):
+  File "D:\Base de datos\Sistema-Integrado-de-PCP-main\backend\agents\report_master_persistor.py", line 186, in run_report_persistence
+    post_to_supabase('sap_reporte_maestro', batch)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Base de datos\Sistema-Integrado-de-PCP-main\backend\modules\api_client.py", line 35, in post_to_supabase
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\EPALLARC\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://nvrcsheavwwrcukhtvcw.supabase.co/rest/v1/sap_reporte_maestro
+2026-02-18 15:23:48,561 - INFO - --- Iniciando persistencia de Reporte Maestro ---
+2026-02-18 15:23:48,561 - INFO - Reporte para 2026-02. Días restantes en mes: 10
+2026-02-18 15:23:48,561 - INFO - Descargando datos de Supabase...
+2026-02-18 15:24:06,199 - INFO - Procesando cálculos dinámicos...
+2026-02-18 15:24:06,227 - INFO - Limpiando tabla sap_reporte_maestro...
+2026-02-18 15:24:06,694 - INFO - Insertando nuevos datos consolidado...
+2026-02-18 15:24:08,134 - INFO - Subido batch 1 (500/5644)
+2026-02-18 15:24:08,733 - INFO - Subido batch 2 (1000/5644)
+2026-02-18 15:24:09,360 - INFO - Subido batch 3 (1500/5644)
+2026-02-18 15:24:09,948 - INFO - Subido batch 4 (2000/5644)
+2026-02-18 15:24:10,702 - INFO - Subido batch 5 (2500/5644)
+2026-02-18 15:24:11,449 - INFO - Subido batch 6 (3000/5644)
+2026-02-18 15:24:12,112 - INFO - Subido batch 7 (3500/5644)
+2026-02-18 15:24:12,686 - INFO - Subido batch 8 (4000/5644)
+2026-02-18 15:24:13,335 - INFO - Subido batch 9 (4500/5644)
+2026-02-18 15:24:14,368 - INFO - Subido batch 10 (5000/5644)
+2026-02-18 15:24:15,176 - INFO - Subido batch 11 (5500/5644)
+2026-02-18 15:24:15,704 - INFO - Subido batch 12 (5644/5644)
+2026-02-18 15:24:15,704 - INFO - --- Persistencia completada exitosamente ---

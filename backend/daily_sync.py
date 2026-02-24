@@ -1,6 +1,7 @@
 
 import os
 from sync_utils import sync_file, sync_production_file, sync_stock_mb52, sync_programa_produccion
+from agents.report_master_persistor import run_report_persistence
 
 # Absolute path to the Excel files (in OneDrive)
 BASE_PATH = r"D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\PCP - General"
@@ -25,3 +26,8 @@ if __name__ == "__main__":
     print("\n--- Syncing Stock MB52 ---")
     sync_stock_mb52(MB52_FILE_PATH)
 
+    print("\n--- Refrescando Reporte Maestro de Proyección ---")
+    try:
+        run_report_persistence()
+    except Exception as e:
+        print(f"Error al refrescar reporte: {e}")

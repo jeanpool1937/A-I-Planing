@@ -1,4 +1,4 @@
-# INSIGHTS I+D ANTIGRAVITY - 2026-02-18 08:00:54
+# INSIGHTS I+D ANTIGRAVITY - 2026-02-19 08:00:55
 
 ## 1. Estado del Arte
 La industria de PCP está migrando hacia modelos predictivos basados en Graph Neural Networks para la optimización de inventarios multieslabón.
