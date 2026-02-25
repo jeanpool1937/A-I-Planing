@@ -715,28 +715,33 @@ export const api = {
     },
 
     /**
-     * Obtiene los SKUs únicos que tienen registros en la tabla sap_produccion.
-     * Se usa para filtrar globalmente y mostrar solo SKUs con historial de producción.
+     * Obtiene los IDs de SKUs que tienen un Plan de Producción en los últimos 6 meses.
+     * Se usa para el filtro global del sistema.
      */
-    getProductionSkuIds: async (): Promise<Set<string>> => {
+    getPlannedSkuIds: async (): Promise<Set<string>> => {
         let allIds: string[] = [];
         let page = 0;
         const pageSize = 1000;
         let hasMore = true;
 
+        // Calcular fecha de corte: hace 6 meses desde hoy
+        const now = new Date();
+        const cutOffDate = new Date(now.setMonth(now.getMonth() - 6)).toISOString().split('T')[0];
+
         while (hasMore) {
             const { data, error } = await supabase
-                .from('sap_produccion')
-                .select('material')
+                .from('sap_programa_produccion')
+                .select('sku_produccion')
+                .gte('fecha', cutOffDate)
                 .range(page * pageSize, (page + 1) * pageSize - 1);
 
             if (error) {
-                console.error('Error fetching production SKU IDs:', error);
+                console.error('Error fetching planned SKU IDs:', error);
                 throw error;
             }
 
             if (data && data.length > 0) {
-                allIds.push(...data.map((d: any) => d.material));
+                allIds.push(...data.map((d: any) => d.sku_produccion));
                 if (data.length < pageSize) hasMore = false;
                 page++;
             } else {
@@ -746,7 +751,7 @@ export const api = {
 
         // Normalizar: eliminar ceros iniciales para matching con maestro
         const uniqueIds = new Set(allIds.map(id => (id || '').toString().replace(/^0+/, '')));
-        console.log(`Production SKU filter: ${uniqueIds.size} unique SKUs from sap_produccion`);
+        console.log(`Planned SKU filter: ${uniqueIds.size} unique SKUs from sap_programa_produccion`);
         return uniqueIds;
     }
 };

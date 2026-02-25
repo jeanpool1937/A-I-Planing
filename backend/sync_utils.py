@@ -268,6 +268,78 @@ def sync_stock_mb52(file_path: str, dry_run: bool = False):
     except Exception as e:
         logging.error(f"Error in sync_stock_mb52: {e}")
 
+
+def sync_master_data(file_path, sheet_name, table_name, clean_col_func, pk_col, usecols=None):
+    logging.info(f"--- Starting Sync for {table_name} from {sheet_name} ---")
+    
+    if not os.path.exists(file_path):
+        logging.error(f"File not found: {file_path}")
+        return
+
+    try:
+        read_kwargs = {'sheet_name': sheet_name}
+        if usecols:
+            read_kwargs['usecols'] = usecols
+            
+        df = pd.read_excel(file_path, **read_kwargs)
+        
+        # Eliminar columnas duplicadas
+        df = df.loc[:, ~df.columns.duplicated()]
+        
+        # Renombrar columnas
+        df.columns = [clean_col_func(c) for c in df.columns]
+        
+        # Filtrar filas sin PK
+        if pk_col in df.columns:
+            df = df.dropna(subset=[pk_col])
+        else:
+            logging.error(f"PK column {pk_col} not found. Cols: {df.columns.tolist()}")
+            return
+
+        # Limpiar datos
+        records = []
+        for _, row in df.iterrows():
+            r = row.to_dict()
+            cleaned = {}
+            for k, v in r.items():
+                if pd.isna(v): 
+                    cleaned[k] = None
+                else:
+                    # Normalizar IDs de material (quitar .0)
+                    if k == 'codigo' or k == 'material':
+                        val = str(v).strip()
+                        if val.endswith('.0'): val = val[:-2]
+                        cleaned[k] = val
+                    else:
+                        cleaned[k] = v
+            
+            # Lógica de País: Si no viene en el Excel, intentar deducir o poner default
+            # Pero en este sistema, el país es vital. Si el código empieza por '4', suele ser Colombia para BACO.
+            if 'pais' not in cleaned or not cleaned['pais']:
+                if str(cleaned.get('codigo', '')).startswith('4'):
+                    cleaned['pais'] = 'Colombia'
+                else:
+                    cleaned['pais'] = 'Peru'
+            
+            records.append(cleaned)
+
+        if not dry_run:
+            # Upsert logic (insert or update)
+            # Para el maestro solemos truncar y recargar si es pequeño, 
+            # pero aquí usaremos una estrategia de limpieza previa para evitar duplicados si la PK cambia
+            del_url = f"{SUPABASE_URL}/rest/v1/{table_name}"
+            # Truncado opcional o Upsert. El usuario suele preferir ver datos frescos.
+            requests.delete(del_url, headers=get_headers(), params={"id": "gt.0"})
+            
+            batch_size = 500
+            for i in range(0, len(records), batch_size):
+                batch = records[i:i+batch_size]
+                post_to_supabase(table_name, batch)
+            logging.info(f"Sync completed for {table_name}. Total: {len(records)}")
+
+    except Exception as e:
+        logging.error(f"Error in sync_master_data: {e}")
+
 def sync_programa_produccion(file_path: str, dry_run: bool = False):
     logging.info(f"--- Starting Programa Produccion Sync: {file_path} ---")
     if not os.path.exists(file_path):

@@ -71,7 +71,8 @@ def clean_articulos_column_name(col_name):
     if 'ABC' in c: return 'abc'
     if 'Clase' in c: return 'clase'
     if 'Lead' in c: return 'lead_time'
-    if 'Stock' in c: return 'stock_seguridad'
+    if 'Stock' in c and ('Segur' in c or 'SS' in c): return 'stock_seguridad'
+
     return c.lower().replace(' ', '_').replace('.', '').replace('(', '').replace(')', '')
 
 def clean_mb52_column_name(col_name):
