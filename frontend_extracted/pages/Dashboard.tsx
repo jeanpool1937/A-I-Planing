@@ -27,6 +27,42 @@ const COLORS = [
   '#84cc16', '#e11d48', '#0ea5e9', '#d946ef', '#64748b'
 ];
 
+const AnomalyWidget: React.FC = () => {
+  const [anomalies, setAnomalies] = useState<any[]>([]);
+  useEffect(() => {
+    fetch('http://localhost:8000/cognitive/anomalies?limit=4')
+      .then(r => r.json())
+      .then(setAnomalies)
+      .catch(console.error);
+  }, []);
+
+  return (
+    <div className="bg-dark-900 border border-slate-800 rounded-xl p-6 mt-6">
+      <h3 className="text-base font-semibold text-white mb-4 flex items-center gap-2">
+        <span className="material-symbols-rounded text-rose-400 text-lg">monitoring</span>
+        Detección de Anomalías (IA)
+      </h3>
+      <div className="space-y-3">
+        {anomalies.filter(a => a.status === 'open').length === 0 ? (
+          <p className="text-xs text-slate-500 italic">No hay anomalías pendientes de revisión.</p>
+        ) : (
+          anomalies.filter(a => a.status === 'open').map(a => (
+            <div key={a.id} className="flex justify-between items-center bg-slate-800/40 p-3 rounded-lg border border-slate-700">
+              <div>
+                <p className="text-sm font-bold text-white">{a.sku_id}</p>
+                <p className="text-[10px] text-rose-400 font-bold uppercase">{a.movement_type} anómalo: {a.actual_value} TN</p>
+              </div>
+              <span className={`text-[10px] px-2 py-0.5 rounded font-bold uppercase ${a.severity === 'critical' ? 'bg-rose-500 text-white' : 'bg-amber-500 text-white'}`}>
+                {a.severity}
+              </span>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
 export const Dashboard: React.FC<DashboardProps> = ({ onViewChange, filteredSkus, onSkuSelect }) => {
   const { skus } = useData();
   const [demandData, setDemandData] = useState<any[]>([]);
@@ -285,6 +321,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onViewChange, filteredSkus
           >
             Ver auditoría completa &rarr;
           </button>
+
+          <AnomalyWidget />
         </div>
       </div>
 

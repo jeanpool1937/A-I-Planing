@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import { calculateProjection, calculateInitialStock, ProjectionDay } from '../utils/projection';
 import { api } from '../services/api';
+import { HistoricalValidationChart } from '../components/HistoricalValidationChart';
 
 interface ProjectionData {
     date: string;
@@ -761,6 +762,9 @@ export const StockProjection: React.FC<StockProjectionProps> = ({
                                     </table>
                                 </div>
                             </div>
+
+                            {/* Validación Histórica (Backtesting) */}
+                            <HistoricalValidationChart skuId={selectedSku} />
                         </>
                     )}
                 </div>

@@ -243,3 +243,49 @@
 2026-02-18 12:50:08 - INFO - Prepared 2096 records for sap_bom_multinivel.
 2026-02-18 12:50:09 - INFO - Truncated sap_bom_multinivel successfully.
 2026-02-18 12:50:12 - INFO - Finished BOM sync. Total: 2096
+2026-02-25 08:35:30 - INFO - --- Starting Sync: D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\PCP - General\2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Movimientos\ConsumoMes.xlsx ---
+2026-02-25 08:35:31 - INFO - Fetching existing records since 2026-02-01...
+2026-02-25 08:35:42 - INFO - Uploaded batch 0 - 1000
+2026-02-25 08:35:43 - INFO - Uploaded batch 1000 - 2000
+2026-02-25 08:35:44 - INFO - Uploaded batch 2000 - 3000
+2026-02-25 08:35:45 - INFO - Uploaded batch 3000 - 4000
+2026-02-25 08:35:46 - INFO - Uploaded batch 4000 - 5000
+2026-02-25 08:35:47 - INFO - Uploaded batch 5000 - 5935
+2026-02-25 08:35:47 - INFO - Finished. Total uploaded: 5935
+2026-02-25 08:37:10 - INFO - --- Starting Sync: D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\PCP - General\2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Movimientos\ConsumoMes.xlsx ---
+2026-02-25 08:37:10 - INFO - Fetching existing records since 2026-02-01...
+2026-02-25 08:37:24 - INFO - No new rows to upload.
+2026-02-25 08:37:25 - INFO - --- Starting Production Sync: D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\PCP - General\2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Produccion\ProduccionMes.xlsx ---
+2026-02-25 08:37:25 - INFO - Fetching existing production records since 2026-02-01...
+2026-02-25 08:37:31 - INFO - Uploaded production batch 0
+2026-02-25 08:37:32 - INFO - Uploaded production batch 1000
+2026-02-25 08:37:33 - INFO - Uploaded production batch 2000
+2026-02-25 08:37:34 - INFO - Uploaded production batch 3000
+2026-02-25 08:37:34 - INFO - Finished Production sync. Total: 3291
+2026-02-25 08:37:35 - INFO - --- Starting Programa Produccion Sync: D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\PCP - General\2. CONTROL\COBERTURAS\Planes 2025.xlsm ---
+2026-02-25 08:37:35 - INFO - Prepared 2379 records for sap_programa_produccion.
+2026-02-25 08:37:36 - INFO - Truncated sap_programa_produccion successfully.
+2026-02-25 08:37:38 - INFO - Finished Programa Produccion sync. Total: 2379
+2026-02-25 08:37:39 - INFO - --- Starting Stock MB52 Sync: D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\PCP - General\2. CONTROL\COBERTURAS\MB52.XLSX ---
+2026-02-25 08:37:40 - INFO - Prepared 10564 records for sap_stock_mb52.
+2026-02-25 08:37:41 - INFO - Truncated sap_stock_mb52 successfully.
+2026-02-25 08:37:53 - INFO - Finished MB52 sync. Total uploaded: 10564
+2026-02-25 08:37:53 - INFO - --- Iniciando persistencia de Reporte Maestro ---
+2026-02-25 08:37:53 - INFO - Reporte para 2026-02. Días restantes en mes: 3
+2026-02-25 08:37:53 - INFO - Descargando datos de Supabase...
+2026-02-25 08:38:21 - INFO - Procesando cálculos dinámicos...
+2026-02-25 08:38:21 - INFO - Limpiando tabla sap_reporte_maestro...
+2026-02-25 08:38:21 - INFO - Insertando nuevos datos consolidado...
+2026-02-25 08:38:22 - INFO - Subido batch 1 (500/5644)
+2026-02-25 08:38:23 - INFO - Subido batch 2 (1000/5644)
+2026-02-25 08:38:23 - INFO - Subido batch 3 (1500/5644)
+2026-02-25 08:38:24 - INFO - Subido batch 4 (2000/5644)
+2026-02-25 08:38:25 - INFO - Subido batch 5 (2500/5644)
+2026-02-25 08:38:26 - INFO - Subido batch 6 (3000/5644)
+2026-02-25 08:38:27 - INFO - Subido batch 7 (3500/5644)
+2026-02-25 08:38:28 - INFO - Subido batch 8 (4000/5644)
+2026-02-25 08:38:29 - INFO - Subido batch 9 (4500/5644)
+2026-02-25 08:38:30 - INFO - Subido batch 10 (5000/5644)
+2026-02-25 08:38:31 - INFO - Subido batch 11 (5500/5644)
+2026-02-25 08:38:32 - INFO - Subido batch 12 (5644/5644)
+2026-02-25 08:38:32 - INFO - --- Persistencia completada exitosamente ---

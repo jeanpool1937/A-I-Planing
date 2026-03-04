@@ -173,13 +173,27 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const isFetching = useRef(false);
 
-  const loadData = async () => {
+  // TTL de caché: 4 horas. Los datos SAP sincronizan 1x/día, no need frecuente.
+  const CACHE_TTL_MS = 4 * 60 * 60 * 1000;
+
+  const loadData = async (forceRefresh = false) => {
     if (isFetching.current) return;
     isFetching.current = true;
-    setIsLoading(true);
 
     const startTime = performance.now();
     addLog(`Iniciando carga de datos para ${selectedCountry}...`);
+
+    // Verificar si el caché es reciente (TTL de 4 horas) para evitar egress innecesario
+    if (!forceRefresh) {
+      const maestroExpired = await cacheService.isExpired(`cache_maestro_${selectedCountry}`, CACHE_TTL_MS);
+      if (!maestroExpired) {
+        addLog(`Caché válido (<4h). Omitiendo fetch a Supabase para ahorrar egress.`);
+        isFetching.current = false;
+        return; // Datos en caché aún frescos → no re-descargar
+      }
+    }
+
+    setIsLoading(true);
 
     const startTimeNet = performance.now();
 
@@ -415,7 +429,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     initCache();
 
-    const interval = setInterval(() => loadData(), 300000); // Polling cada 5m
+    // Polling cada 60 minutos (antes era 5 min). Los datos SAP sincronizan 1x/día.
+    // forceRefresh=true para forzar descarga en el intervalo programado
+    const interval = setInterval(() => loadData(true), 3600000);
     return () => clearInterval(interval);
   }, []);
 
@@ -433,7 +449,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const checkConnection = async () => {
-    await loadData();
+    // El botón de reconexión manual siempre fuerza refresh
+    await loadData(true);
   };
 
   const updateConsumptionConfig = (newConfig: ConsumptionConfig) => {

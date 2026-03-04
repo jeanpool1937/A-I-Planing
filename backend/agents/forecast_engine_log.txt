@@ -1,0 +1,749 @@
+2026-03-03 16:48:54,698 - INFO - ============================================================
+2026-03-03 16:48:54,698 - INFO -   MOTOR DE PRONÓSTICOS HÍBRIDO — Inicio
+2026-03-03 16:48:54,698 - INFO - ============================================================
+2026-03-03 16:48:54,698 - INFO - Descargando datos fuente de Supabase...
+2026-03-03 16:49:24,791 - INFO -   Consumo mensual: 32394 registros
+2026-03-03 16:49:57,901 - INFO -   Consumo diario: 38150 registros
+2026-03-03 16:50:26,679 - INFO -   Producción real: 36971 registros
+2026-03-03 16:50:39,489 - INFO -   Demanda proyectada: 18370 registros
+2026-03-03 16:50:42,028 - INFO -   Programa producción: 1000 registros
+2026-03-03 16:50:46,155 - INFO -   Segmentos ABC/XYZ: 5644 registros
+2026-03-03 16:50:46,156 - INFO - Generando pronósticos...
+2026-03-03 16:50:48,583 - INFO -   SKUs candidatos: 3621
+2026-03-03 16:50:53,159 - INFO -   Total registros generados: 641876
+2026-03-03 16:50:53,159 - INFO -   Distribución por método: {'WMA': 251640, 'SES': 57460, 'CROSTON': 201558, 'PLAN_DIRECTO': 17703, 'PROGRAMA': 682, 'HIBRIDO': 114840}
+2026-03-03 16:50:53,165 - INFO - Persistiendo 641876 pronósticos en Supabase...
+2026-03-03 16:50:54,012 - INFO -   Tabla truncada exitosamente.
+2026-03-03 16:50:54,013 - ERROR - Error insertando batch 0: Out of range float values are not JSON compliant: nan
+2026-03-03 16:50:54,014 - ERROR - Error insertando batch 500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:50:54,014 - ERROR - Error insertando batch 1000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:07,081 - INFO -   Insertado batch 11 (4000/641876)
+2026-03-03 16:51:07,921 - ERROR - Error insertando batch 6000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:07,922 - ERROR - Error insertando batch 6500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:11,122 - ERROR - Error insertando batch 8000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:15,693 - ERROR - Error insertando batch 10000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:17,249 - ERROR - Error insertando batch 11000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:17,250 - ERROR - Error insertando batch 11500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:17,251 - ERROR - Error insertando batch 12000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:22,680 - ERROR - Error insertando batch 15000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:22,681 - ERROR - Error insertando batch 15500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:22,681 - ERROR - Error insertando batch 16000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:25,756 - ERROR - Error insertando batch 17500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:28,139 - ERROR - Error insertando batch 19000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:29,659 - INFO -   Insertado batch 41 (13000/641876)
+2026-03-03 16:51:38,712 - ERROR - Error insertando batch 23500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:38,713 - ERROR - Error insertando batch 24000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:38,713 - ERROR - Error insertando batch 24500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:38,713 - ERROR - Error insertando batch 25000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:40,437 - ERROR - Error insertando batch 26000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:40,438 - ERROR - Error insertando batch 26500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:45,426 - ERROR - Error insertando batch 29000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:47,019 - ERROR - Error insertando batch 30000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:47,021 - ERROR - Error insertando batch 30500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:47,021 - ERROR - Error insertando batch 31000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:47,022 - ERROR - Error insertando batch 31500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:47,022 - ERROR - Error insertando batch 32000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:48,514 - ERROR - Error insertando batch 33000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:49,111 - ERROR - Error insertando batch 34000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:50,631 - INFO -   Insertado batch 71 (21000/641876)
+2026-03-03 16:51:54,353 - ERROR - Error insertando batch 37000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:54,990 - ERROR - Error insertando batch 38000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:54,991 - ERROR - Error insertando batch 38500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:55,655 - ERROR - Error insertando batch 39500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:55,655 - ERROR - Error insertando batch 40000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:51:58,617 - ERROR - Error insertando batch 41500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:00,028 - ERROR - Error insertando batch 42500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:00,028 - ERROR - Error insertando batch 43000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:00,029 - ERROR - Error insertando batch 43500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:01,866 - INFO -   Insertado batch 91 (26500/641876)
+2026-03-03 16:52:01,867 - ERROR - Error insertando batch 45500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:01,868 - ERROR - Error insertando batch 46000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:01,868 - ERROR - Error insertando batch 46500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:01,868 - ERROR - Error insertando batch 47000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:01,869 - ERROR - Error insertando batch 47500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:04,684 - ERROR - Error insertando batch 49000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:05,970 - ERROR - Error insertando batch 50000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:05,970 - ERROR - Error insertando batch 50500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:05,970 - ERROR - Error insertando batch 51000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:05,971 - ERROR - Error insertando batch 51500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:05,972 - ERROR - Error insertando batch 52000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:05,972 - ERROR - Error insertando batch 52500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:05,972 - ERROR - Error insertando batch 53000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:10,725 - INFO -   Insertado batch 111 (30000/641876)
+2026-03-03 16:52:10,726 - ERROR - Error insertando batch 55500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:12,728 - ERROR - Error insertando batch 57500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:17,518 - ERROR - Error insertando batch 60000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:18,768 - ERROR - Error insertando batch 61000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:18,768 - ERROR - Error insertando batch 61500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:18,769 - ERROR - Error insertando batch 62000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:20,489 - ERROR - Error insertando batch 63000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:21,892 - ERROR - Error insertando batch 64000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:21,893 - ERROR - Error insertando batch 64500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:21,893 - ERROR - Error insertando batch 65000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:21,893 - ERROR - Error insertando batch 65500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:21,894 - ERROR - Error insertando batch 66000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:21,894 - ERROR - Error insertando batch 66500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:29,089 - ERROR - Error insertando batch 70000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:30,509 - ERROR - Error insertando batch 71000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:30,510 - ERROR - Error insertando batch 71500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:30,510 - ERROR - Error insertando batch 72000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:31,834 - ERROR - Error insertando batch 73000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:31,834 - ERROR - Error insertando batch 73500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:31,835 - ERROR - Error insertando batch 74000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:31,836 - ERROR - Error insertando batch 74500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:31,836 - ERROR - Error insertando batch 75000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:33,257 - ERROR - Error insertando batch 76000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:35,305 - ERROR - Error insertando batch 78000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:35,305 - ERROR - Error insertando batch 78500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:35,306 - ERROR - Error insertando batch 79000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:35,306 - ERROR - Error insertando batch 79500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:36,905 - INFO -   Insertado batch 161 (41500/641876)
+2026-03-03 16:52:36,906 - ERROR - Error insertando batch 80500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:36,906 - ERROR - Error insertando batch 81000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:41,034 - ERROR - Error insertando batch 83000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:41,035 - ERROR - Error insertando batch 83500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:44,914 - INFO -   Insertado batch 171 (44500/641876)
+2026-03-03 16:52:45,601 - ERROR - Error insertando batch 86000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:45,602 - ERROR - Error insertando batch 86500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:45,602 - ERROR - Error insertando batch 87000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:45,603 - ERROR - Error insertando batch 87500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:45,603 - ERROR - Error insertando batch 88000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:47,715 - ERROR - Error insertando batch 89500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:48,987 - INFO -   Insertado batch 181 (46500/641876)
+2026-03-03 16:52:52,621 - ERROR - Error insertando batch 91500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:52:52,621 - ERROR - Error insertando batch 92000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:01,411 - INFO -   Insertado batch 191 (50500/641876)
+2026-03-03 16:53:03,304 - ERROR - Error insertando batch 96500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:04,653 - ERROR - Error insertando batch 97500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:09,359 - ERROR - Error insertando batch 99500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:09,359 - ERROR - Error insertando batch 100000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:09,360 - ERROR - Error insertando batch 100500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:11,402 - ERROR - Error insertando batch 102000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:11,402 - ERROR - Error insertando batch 102500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:11,403 - ERROR - Error insertando batch 103000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:14,031 - ERROR - Error insertando batch 104500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:14,652 - INFO -   Insertado batch 211 (56000/641876)
+2026-03-03 16:53:17,238 - ERROR - Error insertando batch 106500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:17,238 - ERROR - Error insertando batch 107000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:25,103 - INFO -   Insertado batch 221 (60000/641876)
+2026-03-03 16:53:25,103 - ERROR - Error insertando batch 110500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:33,115 - ERROR - Error insertando batch 114500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:33,116 - ERROR - Error insertando batch 115000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:33,116 - ERROR - Error insertando batch 115500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:33,117 - ERROR - Error insertando batch 116000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:33,117 - ERROR - Error insertando batch 116500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:33,117 - ERROR - Error insertando batch 117000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:33,118 - ERROR - Error insertando batch 117500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:39,333 - INFO -   Insertado batch 241 (66000/641876)
+2026-03-03 16:53:39,941 - ERROR - Error insertando batch 121000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:42,474 - ERROR - Error insertando batch 122000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:44,317 - ERROR - Error insertando batch 123500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:47,599 - INFO -   Insertado batch 251 (69500/641876)
+2026-03-03 16:53:49,002 - ERROR - Error insertando batch 126000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:51,647 - ERROR - Error insertando batch 128000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:52,262 - ERROR - Error insertando batch 129000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:54,862 - INFO -   Insertado batch 261 (73000/641876)
+2026-03-03 16:53:58,062 - ERROR - Error insertando batch 132000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:58,062 - ERROR - Error insertando batch 132500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:53:58,062 - ERROR - Error insertando batch 133000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:00,511 - ERROR - Error insertando batch 134000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:00,511 - ERROR - Error insertando batch 134500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:01,126 - INFO -   Insertado batch 271 (75500/641876)
+2026-03-03 16:54:03,669 - ERROR - Error insertando batch 136500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:03,670 - ERROR - Error insertando batch 137000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:03,671 - ERROR - Error insertando batch 137500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:03,671 - ERROR - Error insertando batch 138000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:03,671 - ERROR - Error insertando batch 138500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:03,672 - ERROR - Error insertando batch 139000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:04,832 - INFO -   Insertado batch 281 (77500/641876)
+2026-03-03 16:54:06,077 - ERROR - Error insertando batch 141000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:06,078 - ERROR - Error insertando batch 141500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:07,320 - ERROR - Error insertando batch 142500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:08,207 - ERROR - Error insertando batch 143500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:10,218 - ERROR - Error insertando batch 145000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:10,219 - ERROR - Error insertando batch 145500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:11,707 - ERROR - Error insertando batch 146500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:13,403 - ERROR - Error insertando batch 148000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:13,404 - ERROR - Error insertando batch 148500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:13,404 - ERROR - Error insertando batch 149000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:13,405 - ERROR - Error insertando batch 149500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:13,405 - ERROR - Error insertando batch 150000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:13,405 - ERROR - Error insertando batch 150500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:15,434 - ERROR - Error insertando batch 152000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:16,761 - ERROR - Error insertando batch 153000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:17,992 - ERROR - Error insertando batch 154000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:19,364 - ERROR - Error insertando batch 155000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:19,365 - ERROR - Error insertando batch 155500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:19,365 - ERROR - Error insertando batch 156000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:19,366 - ERROR - Error insertando batch 156500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:25,312 - INFO -   Insertado batch 321 (87500/641876)
+2026-03-03 16:54:25,312 - ERROR - Error insertando batch 160500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:33,875 - INFO -   Insertado batch 331 (92000/641876)
+2026-03-03 16:54:36,952 - ERROR - Error insertando batch 167000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:38,072 - ERROR - Error insertando batch 168000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:38,714 - ERROR - Error insertando batch 169000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:38,714 - ERROR - Error insertando batch 169500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:38,715 - ERROR - Error insertando batch 170000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:38,715 - ERROR - Error insertando batch 170500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:40,548 - ERROR - Error insertando batch 172000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:41,810 - ERROR - Error insertando batch 173500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:41,811 - ERROR - Error insertando batch 174000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:41,811 - ERROR - Error insertando batch 174500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:41,812 - ERROR - Error insertando batch 175000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:50,012 - ERROR - Error insertando batch 180000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:50,012 - ERROR - Error insertando batch 180500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:50,613 - ERROR - Error insertando batch 181500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:51,964 - ERROR - Error insertando batch 182500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:51,964 - ERROR - Error insertando batch 183000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:51,964 - ERROR - Error insertando batch 183500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:53,184 - ERROR - Error insertando batch 184500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:54,439 - INFO -   Insertado batch 371 (103000/641876)
+2026-03-03 16:54:55,555 - ERROR - Error insertando batch 186000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:55,555 - ERROR - Error insertando batch 186500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:54:58,915 - ERROR - Error insertando batch 188500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:00,154 - ERROR - Error insertando batch 190000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:00,154 - ERROR - Error insertando batch 190500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:00,155 - ERROR - Error insertando batch 191000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:00,155 - ERROR - Error insertando batch 191500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:00,829 - ERROR - Error insertando batch 192500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:05,800 - INFO -   Insertado batch 391 (109000/641876)
+2026-03-03 16:55:10,361 - ERROR - Error insertando batch 198500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:10,927 - ERROR - Error insertando batch 199500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:10,928 - ERROR - Error insertando batch 200000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:10,928 - ERROR - Error insertando batch 200500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:10,929 - ERROR - Error insertando batch 201000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:11,660 - ERROR - Error insertando batch 202000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:15,852 - INFO -   Insertado batch 411 (116000/641876)
+2026-03-03 16:55:15,853 - ERROR - Error insertando batch 205500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:15,853 - ERROR - Error insertando batch 206000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:15,854 - ERROR - Error insertando batch 206500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:15,854 - ERROR - Error insertando batch 207000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:17,972 - ERROR - Error insertando batch 209000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:17,973 - ERROR - Error insertando batch 209500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:18,587 - INFO -   Insertado batch 421 (118000/641876)
+2026-03-03 16:55:18,588 - ERROR - Error insertando batch 210500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:18,588 - ERROR - Error insertando batch 211000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:19,273 - ERROR - Error insertando batch 212000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:19,899 - ERROR - Error insertando batch 213000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:20,454 - ERROR - Error insertando batch 214000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:21,138 - ERROR - Error insertando batch 215000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:25,486 - ERROR - Error insertando batch 219000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:25,486 - ERROR - Error insertando batch 219500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:26,089 - INFO -   Insertado batch 441 (124000/641876)
+2026-03-03 16:55:27,428 - ERROR - Error insertando batch 221500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:29,810 - ERROR - Error insertando batch 224000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:31,006 - INFO -   Insertado batch 451 (128000/641876)
+2026-03-03 16:55:37,225 - INFO -   Insertado batch 461 (133000/641876)
+2026-03-03 16:55:39,113 - ERROR - Error insertando batch 232000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:40,883 - ERROR - Error insertando batch 234000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:40,883 - ERROR - Error insertando batch 234500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:40,884 - ERROR - Error insertando batch 235000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:43,274 - ERROR - Error insertando batch 237500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:43,275 - ERROR - Error insertando batch 238000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:43,943 - ERROR - Error insertando batch 239000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:43,943 - ERROR - Error insertando batch 239500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:44,606 - INFO -   Insertado batch 481 (139000/641876)
+2026-03-03 16:55:46,510 - ERROR - Error insertando batch 242000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:47,101 - ERROR - Error insertando batch 243000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:47,101 - ERROR - Error insertando batch 243500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:47,102 - ERROR - Error insertando batch 244000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:47,102 - ERROR - Error insertando batch 244500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:47,686 - INFO -   Insertado batch 491 (141500/641876)
+2026-03-03 16:55:51,425 - ERROR - Error insertando batch 248500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:51,425 - ERROR - Error insertando batch 249000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:52,692 - INFO -   Insertado batch 501 (145500/641876)
+2026-03-03 16:55:53,294 - ERROR - Error insertando batch 251000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:53,931 - ERROR - Error insertando batch 252000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:53,931 - ERROR - Error insertando batch 252500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:55:56,919 - INFO -   Insertado batch 511 (149000/641876)
+2026-03-03 16:56:01,842 - ERROR - Error insertando batch 259000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:01,843 - ERROR - Error insertando batch 259500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:02,680 - INFO -   Insertado batch 521 (153000/641876)
+2026-03-03 16:56:04,458 - ERROR - Error insertando batch 262000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:05,108 - ERROR - Error insertando batch 263000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:05,751 - ERROR - Error insertando batch 264000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:05,752 - ERROR - Error insertando batch 264500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:06,449 - INFO -   Insertado batch 531 (156000/641876)
+2026-03-03 16:56:07,034 - ERROR - Error insertando batch 266000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:10,023 - ERROR - Error insertando batch 269000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:10,024 - ERROR - Error insertando batch 269500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:10,553 - INFO -   Insertado batch 541 (159500/641876)
+2026-03-03 16:56:10,554 - ERROR - Error insertando batch 270500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:10,554 - ERROR - Error insertando batch 271000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:10,555 - ERROR - Error insertando batch 271500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:11,128 - ERROR - Error insertando batch 272500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:12,945 - ERROR - Error insertando batch 274500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:12,946 - ERROR - Error insertando batch 275000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:12,946 - ERROR - Error insertando batch 275500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:18,196 - INFO -   Insertado batch 561 (166000/641876)
+2026-03-03 16:56:23,491 - ERROR - Error insertando batch 285000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:23,492 - ERROR - Error insertando batch 285500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:23,493 - ERROR - Error insertando batch 286000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:23,493 - ERROR - Error insertando batch 286500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:23,493 - ERROR - Error insertando batch 287000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:23,494 - ERROR - Error insertando batch 287500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:23,494 - ERROR - Error insertando batch 288000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:24,683 - ERROR - Error insertando batch 289500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:24,683 - ERROR - Error insertando batch 290000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:25,925 - ERROR - Error insertando batch 291500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:25,926 - ERROR - Error insertando batch 292000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:26,495 - ERROR - Error insertando batch 293000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:28,242 - ERROR - Error insertando batch 295000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:28,828 - ERROR - Error insertando batch 296000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:28,828 - ERROR - Error insertando batch 296500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:32,275 - ERROR - Error insertando batch 300000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:32,871 - ERROR - Error insertando batch 301000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:34,688 - ERROR - Error insertando batch 303000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:34,689 - ERROR - Error insertando batch 303500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:36,431 - INFO -   Insertado batch 611 (181500/641876)
+2026-03-03 16:56:37,793 - ERROR - Error insertando batch 306500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:37,794 - ERROR - Error insertando batch 307000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:37,794 - ERROR - Error insertando batch 307500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:37,795 - ERROR - Error insertando batch 308000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:39,519 - ERROR - Error insertando batch 310000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:39,520 - ERROR - Error insertando batch 310500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:40,732 - ERROR - Error insertando batch 312000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:40,733 - ERROR - Error insertando batch 312500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:43,570 - INFO -   Insertado batch 631 (187500/641876)
+2026-03-03 16:56:43,571 - ERROR - Error insertando batch 315500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:43,571 - ERROR - Error insertando batch 316000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:44,166 - ERROR - Error insertando batch 317000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:44,166 - ERROR - Error insertando batch 317500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:44,167 - ERROR - Error insertando batch 318000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:44,167 - ERROR - Error insertando batch 318500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:45,352 - ERROR - Error insertando batch 320000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:45,857 - ERROR - Error insertando batch 321000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:45,858 - ERROR - Error insertando batch 321500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:47,050 - ERROR - Error insertando batch 323000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:48,263 - ERROR - Error insertando batch 324500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:48,263 - ERROR - Error insertando batch 325000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:49,370 - ERROR - Error insertando batch 326500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:49,370 - ERROR - Error insertando batch 327000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:49,370 - ERROR - Error insertando batch 327500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:51,395 - ERROR - Error insertando batch 329500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:52,007 - INFO -   Insertado batch 661 (194500/641876)
+2026-03-03 16:56:52,008 - ERROR - Error insertando batch 330500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:52,614 - ERROR - Error insertando batch 331500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:54,861 - ERROR - Error insertando batch 334000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:54,861 - ERROR - Error insertando batch 334500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:56:55,493 - INFO -   Insertado batch 671 (197500/641876)
+2026-03-03 16:56:57,245 - ERROR - Error insertando batch 337000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:00,864 - INFO -   Insertado batch 681 (202000/641876)
+2026-03-03 16:57:01,380 - ERROR - Error insertando batch 341000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:03,254 - ERROR - Error insertando batch 343000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:05,558 - INFO -   Insertado batch 691 (206000/641876)
+2026-03-03 16:57:07,482 - ERROR - Error insertando batch 347000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:09,054 - ERROR - Error insertando batch 348500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:11,080 - ERROR - Error insertando batch 350000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:11,081 - ERROR - Error insertando batch 350500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:12,248 - ERROR - Error insertando batch 351500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:24,256 - INFO -   Insertado batch 711 (213500/641876)
+2026-03-03 16:57:32,181 - INFO -   Insertado batch 721 (218500/641876)
+2026-03-03 16:57:33,588 - ERROR - Error insertando batch 361500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:33,588 - ERROR - Error insertando batch 362000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:38,227 - INFO -   Insertado batch 731 (222500/641876)
+2026-03-03 16:57:40,253 - ERROR - Error insertando batch 366500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:45,067 - INFO -   Insertado batch 741 (227000/641876)
+2026-03-03 16:57:45,741 - ERROR - Error insertando batch 371000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:45,741 - ERROR - Error insertando batch 371500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:45,742 - ERROR - Error insertando batch 372000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:46,495 - ERROR - Error insertando batch 373000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:46,496 - ERROR - Error insertando batch 373500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:48,661 - INFO -   Insertado batch 751 (229500/641876)
+2026-03-03 16:57:52,916 - ERROR - Error insertando batch 378500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:55,122 - INFO -   Insertado batch 761 (234000/641876)
+2026-03-03 16:57:57,153 - ERROR - Error insertando batch 382000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:57,904 - ERROR - Error insertando batch 383000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:57,905 - ERROR - Error insertando batch 383500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:57,905 - ERROR - Error insertando batch 384000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:57:59,295 - INFO -   Insertado batch 771 (237000/641876)
+2026-03-03 16:58:00,646 - ERROR - Error insertando batch 386500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:00,646 - ERROR - Error insertando batch 387000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:02,361 - ERROR - Error insertando batch 388500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:04,465 - INFO -   Insertado batch 781 (240500/641876)
+2026-03-03 16:58:04,466 - ERROR - Error insertando batch 390500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:05,214 - ERROR - Error insertando batch 391500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:05,214 - ERROR - Error insertando batch 392000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:09,889 - INFO -   Insertado batch 791 (244000/641876)
+2026-03-03 16:58:17,486 - INFO -   Insertado batch 801 (249000/641876)
+2026-03-03 16:58:17,487 - ERROR - Error insertando batch 400500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:20,485 - ERROR - Error insertando batch 403000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:23,493 - INFO -   Insertado batch 811 (253000/641876)
+2026-03-03 16:58:23,494 - ERROR - Error insertando batch 405500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:23,494 - ERROR - Error insertando batch 406000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:25,939 - ERROR - Error insertando batch 408000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:28,861 - INFO -   Insertado batch 821 (256500/641876)
+2026-03-03 16:58:30,433 - ERROR - Error insertando batch 411500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:30,434 - ERROR - Error insertando batch 412000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:30,434 - ERROR - Error insertando batch 412500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:32,361 - ERROR - Error insertando batch 414000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:32,362 - ERROR - Error insertando batch 414500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:33,351 - INFO -   Insertado batch 831 (259000/641876)
+2026-03-03 16:58:33,352 - ERROR - Error insertando batch 415500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:37,144 - ERROR - Error insertando batch 418500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:37,952 - ERROR - Error insertando batch 419500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:37,952 - ERROR - Error insertando batch 420000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:39,553 - ERROR - Error insertando batch 421500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:40,450 - ERROR - Error insertando batch 422500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:40,451 - ERROR - Error insertando batch 423000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:40,452 - ERROR - Error insertando batch 423500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:42,547 - INFO -   Insertado batch 851 (265000/641876)
+2026-03-03 16:58:42,548 - ERROR - Error insertando batch 425500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:43,286 - ERROR - Error insertando batch 426500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:44,066 - ERROR - Error insertando batch 427500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:44,067 - ERROR - Error insertando batch 428000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:44,068 - ERROR - Error insertando batch 428500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:44,693 - ERROR - Error insertando batch 429500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:44,693 - ERROR - Error insertando batch 430000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:46,145 - ERROR - Error insertando batch 431500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:46,764 - ERROR - Error insertando batch 432500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:46,765 - ERROR - Error insertando batch 433000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:48,928 - ERROR - Error insertando batch 434500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:48,928 - ERROR - Error insertando batch 435000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:48,929 - ERROR - Error insertando batch 435500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:48,929 - ERROR - Error insertando batch 436000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:48,930 - ERROR - Error insertando batch 436500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:49,798 - ERROR - Error insertando batch 437500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:49,799 - ERROR - Error insertando batch 438000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:51,426 - ERROR - Error insertando batch 439500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:51,426 - ERROR - Error insertando batch 440000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:55,222 - ERROR - Error insertando batch 443000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:55,223 - ERROR - Error insertando batch 443500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:55,224 - ERROR - Error insertando batch 444000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:56,089 - ERROR - Error insertando batch 445000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:56,089 - ERROR - Error insertando batch 445500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:59,792 - ERROR - Error insertando batch 448500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:59,792 - ERROR - Error insertando batch 449000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:58:59,793 - ERROR - Error insertando batch 449500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:00,493 - INFO -   Insertado batch 901 (276500/641876)
+2026-03-03 16:59:00,494 - ERROR - Error insertando batch 450500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:02,786 - ERROR - Error insertando batch 452500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:04,660 - ERROR - Error insertando batch 454000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:04,661 - ERROR - Error insertando batch 454500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:05,573 - INFO -   Insertado batch 911 (279500/641876)
+2026-03-03 16:59:06,311 - ERROR - Error insertando batch 456000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:06,311 - ERROR - Error insertando batch 456500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:07,256 - ERROR - Error insertando batch 457500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:10,295 - ERROR - Error insertando batch 460000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:11,135 - ERROR - Error insertando batch 461000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:11,136 - ERROR - Error insertando batch 461500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:11,136 - ERROR - Error insertando batch 462000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:11,136 - ERROR - Error insertando batch 462500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:13,703 - ERROR - Error insertando batch 464500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:14,439 - INFO -   Insertado batch 931 (285000/641876)
+2026-03-03 16:59:14,440 - ERROR - Error insertando batch 465500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:14,440 - ERROR - Error insertando batch 466000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:15,092 - ERROR - Error insertando batch 467000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:17,282 - ERROR - Error insertando batch 469000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:18,758 - INFO -   Insertado batch 941 (288000/641876)
+2026-03-03 16:59:21,122 - ERROR - Error insertando batch 472000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:22,722 - ERROR - Error insertando batch 473500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:24,972 - INFO -   Insertado batch 951 (292000/641876)
+2026-03-03 16:59:24,973 - ERROR - Error insertando batch 475500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:24,973 - ERROR - Error insertando batch 476000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:24,974 - ERROR - Error insertando batch 476500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:29,930 - INFO -   Insertado batch 961 (295500/641876)
+2026-03-03 16:59:32,903 - ERROR - Error insertando batch 482500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:32,904 - ERROR - Error insertando batch 483000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:34,445 - ERROR - Error insertando batch 484500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:35,313 - INFO -   Insertado batch 971 (299000/641876)
+2026-03-03 16:59:37,755 - ERROR - Error insertando batch 487000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:40,806 - ERROR - Error insertando batch 489500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:40,806 - ERROR - Error insertando batch 490000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:44,158 - ERROR - Error insertando batch 492500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:47,236 - ERROR - Error insertando batch 495000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:47,236 - ERROR - Error insertando batch 495500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:47,238 - ERROR - Error insertando batch 496000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:47,238 - ERROR - Error insertando batch 496500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:47,240 - ERROR - Error insertando batch 497000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:47,240 - ERROR - Error insertando batch 497500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:50,538 - ERROR - Error insertando batch 500000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:52,945 - ERROR - Error insertando batch 502000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:53,704 - ERROR - Error insertando batch 503000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:53,704 - ERROR - Error insertando batch 503500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:53,705 - ERROR - Error insertando batch 504000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:55,326 - INFO -   Insertado batch 1011 (311500/641876)
+2026-03-03 16:59:56,171 - ERROR - Error insertando batch 506000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:56,172 - ERROR - Error insertando batch 506500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:56,172 - ERROR - Error insertando batch 507000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:56,173 - ERROR - Error insertando batch 507500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:56,173 - ERROR - Error insertando batch 508000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:56,959 - ERROR - Error insertando batch 509000: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:58,759 - INFO -   Insertado batch 1021 (313500/641876)
+2026-03-03 16:59:58,760 - ERROR - Error insertando batch 510500: Out of range float values are not JSON compliant: nan
+2026-03-03 16:59:58,760 - ERROR - Error insertando batch 511000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:02,691 - ERROR - Error insertando batch 514000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:02,691 - ERROR - Error insertando batch 514500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:03,302 - INFO -   Insertado batch 1031 (316500/641876)
+2026-03-03 17:00:03,303 - ERROR - Error insertando batch 515500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:03,303 - ERROR - Error insertando batch 516000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:03,303 - ERROR - Error insertando batch 516500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:03,304 - ERROR - Error insertando batch 517000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:07,144 - ERROR - Error insertando batch 520000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:07,145 - ERROR - Error insertando batch 520500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:07,145 - ERROR - Error insertando batch 521000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:07,146 - ERROR - Error insertando batch 521500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:07,146 - ERROR - Error insertando batch 522000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:08,527 - ERROR - Error insertando batch 523500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:10,973 - INFO -   Insertado batch 1051 (321500/641876)
+2026-03-03 17:00:12,423 - ERROR - Error insertando batch 526500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:12,423 - ERROR - Error insertando batch 527000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:17,175 - INFO -   Insertado batch 1061 (325500/641876)
+2026-03-03 17:00:17,175 - ERROR - Error insertando batch 530500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:18,765 - ERROR - Error insertando batch 532000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:18,765 - ERROR - Error insertando batch 532500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:18,766 - ERROR - Error insertando batch 533000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:18,767 - ERROR - Error insertando batch 533500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:21,502 - INFO -   Insertado batch 1071 (328000/641876)
+2026-03-03 17:00:23,381 - ERROR - Error insertando batch 536500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:23,382 - ERROR - Error insertando batch 537000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:28,466 - INFO -   Insertado batch 1081 (332000/641876)
+2026-03-03 17:00:28,467 - ERROR - Error insertando batch 540500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:29,412 - ERROR - Error insertando batch 541500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:32,051 - ERROR - Error insertando batch 543500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:32,052 - ERROR - Error insertando batch 544000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:32,052 - ERROR - Error insertando batch 544500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:32,053 - ERROR - Error insertando batch 545000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:36,919 - ERROR - Error insertando batch 548500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:36,920 - ERROR - Error insertando batch 549000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:36,920 - ERROR - Error insertando batch 549500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:36,921 - ERROR - Error insertando batch 550000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:37,764 - ERROR - Error insertando batch 551000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:37,765 - ERROR - Error insertando batch 551500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:37,765 - ERROR - Error insertando batch 552000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:40,226 - ERROR - Error insertando batch 554000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:40,227 - ERROR - Error insertando batch 554500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:40,228 - ERROR - Error insertando batch 555000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:41,766 - ERROR - Error insertando batch 556500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:41,766 - ERROR - Error insertando batch 557000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:41,766 - ERROR - Error insertando batch 557500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:45,701 - INFO -   Insertado batch 1121 (342500/641876)
+2026-03-03 17:00:45,702 - ERROR - Error insertando batch 560500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:45,702 - ERROR - Error insertando batch 561000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:47,405 - ERROR - Error insertando batch 562500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:47,406 - ERROR - Error insertando batch 563000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:50,026 - ERROR - Error insertando batch 565000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:51,643 - ERROR - Error insertando batch 566500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:53,095 - ERROR - Error insertando batch 568000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:53,096 - ERROR - Error insertando batch 568500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:54,537 - ERROR - Error insertando batch 570000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:55,300 - ERROR - Error insertando batch 571000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,008 - ERROR - Error insertando batch 573500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,008 - ERROR - Error insertando batch 574000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,008 - ERROR - Error insertando batch 574500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,009 - ERROR - Error insertando batch 575000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,798 - ERROR - Error insertando batch 576000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,798 - ERROR - Error insertando batch 576500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,800 - ERROR - Error insertando batch 577000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,800 - ERROR - Error insertando batch 577500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,801 - ERROR - Error insertando batch 578000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:00:59,802 - ERROR - Error insertando batch 578500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:01,343 - ERROR - Error insertando batch 580000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:06,270 - ERROR - Error insertando batch 583500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:06,271 - ERROR - Error insertando batch 584000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:06,272 - ERROR - Error insertando batch 584500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:06,273 - ERROR - Error insertando batch 585000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:09,472 - ERROR - Error insertando batch 587500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:09,472 - ERROR - Error insertando batch 588000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:09,473 - ERROR - Error insertando batch 588500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:09,474 - ERROR - Error insertando batch 589000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:09,474 - ERROR - Error insertando batch 589500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:09,475 - ERROR - Error insertando batch 590000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:09,475 - ERROR - Error insertando batch 590500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:11,859 - ERROR - Error insertando batch 592500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:12,673 - ERROR - Error insertando batch 593500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:14,019 - ERROR - Error insertando batch 595000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:15,914 - ERROR - Error insertando batch 596500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:18,488 - ERROR - Error insertando batch 598500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:18,489 - ERROR - Error insertando batch 599000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:18,489 - ERROR - Error insertando batch 599500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:19,508 - INFO -   Insertado batch 1201 (363000/641876)
+2026-03-03 17:01:20,493 - ERROR - Error insertando batch 601000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:20,495 - ERROR - Error insertando batch 601500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:23,898 - ERROR - Error insertando batch 604000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:23,898 - ERROR - Error insertando batch 604500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:24,772 - INFO -   Insertado batch 1211 (366000/641876)
+2026-03-03 17:01:25,555 - ERROR - Error insertando batch 606000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:27,113 - ERROR - Error insertando batch 607500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:30,103 - ERROR - Error insertando batch 609500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:31,026 - INFO -   Insertado batch 1221 (369500/641876)
+2026-03-03 17:01:35,036 - ERROR - Error insertando batch 612500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:35,037 - ERROR - Error insertando batch 613000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:35,037 - ERROR - Error insertando batch 613500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:36,623 - ERROR - Error insertando batch 615000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:39,713 - ERROR - Error insertando batch 617500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:43,582 - ERROR - Error insertando batch 620000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:43,583 - ERROR - Error insertando batch 620500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:43,583 - ERROR - Error insertando batch 621000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:43,584 - ERROR - Error insertando batch 621500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:45,821 - ERROR - Error insertando batch 623500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:45,822 - ERROR - Error insertando batch 624000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:47,494 - INFO -   Insertado batch 1251 (379000/641876)
+2026-03-03 17:01:48,248 - ERROR - Error insertando batch 626000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:48,249 - ERROR - Error insertando batch 626500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:50,259 - ERROR - Error insertando batch 628000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:53,506 - INFO -   Insertado batch 1261 (382500/641876)
+2026-03-03 17:01:54,293 - ERROR - Error insertando batch 631000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:57,519 - ERROR - Error insertando batch 634000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:58,865 - INFO -   Insertado batch 1271 (386500/641876)
+2026-03-03 17:01:58,867 - ERROR - Error insertando batch 635500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:01:59,951 - ERROR - Error insertando batch 637000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:02:00,544 - ERROR - Error insertando batch 638000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:02:01,302 - ERROR - Error insertando batch 639000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:02:01,303 - ERROR - Error insertando batch 639500: Out of range float values are not JSON compliant: nan
+2026-03-03 17:02:01,303 - ERROR - Error insertando batch 640000: Out of range float values are not JSON compliant: nan
+2026-03-03 17:02:03,186 - INFO -   Persistencia completada: 389876/641876 registros.
+2026-03-03 17:02:03,696 - INFO -   Tiempo total: 788.5 segundos
+2026-03-03 17:02:03,696 - INFO - ============================================================
+2026-03-03 17:02:03,696 - INFO -   MOTOR DE PRONÓSTICOS — Completado exitosamente
+2026-03-03 17:02:03,696 - INFO - ============================================================
+2026-03-03 17:03:05,206 - INFO - ============================================================
+2026-03-03 17:03:05,206 - INFO -   MOTOR DE PRONÓSTICOS HÍBRIDO — Inicio
+2026-03-03 17:03:05,206 - INFO - ============================================================
+2026-03-03 17:03:05,206 - INFO - Descargando datos fuente de Supabase...
+2026-03-03 17:03:21,578 - INFO -   Consumo mensual: 32394 registros
+2026-03-03 17:03:39,563 - INFO -   Consumo diario: 38150 registros
+2026-03-03 17:03:58,174 - INFO -   Producción real: 36971 registros
+2026-03-03 17:04:06,919 - INFO -   Demanda proyectada: 18370 registros
+2026-03-03 17:04:08,797 - INFO -   Programa producción: 1000 registros
+2026-03-03 17:04:11,988 - INFO -   Segmentos ABC/XYZ: 5644 registros
+2026-03-03 17:04:11,989 - INFO - Generando pronósticos...
+2026-03-03 17:04:13,412 - INFO -   SKUs candidatos: 3621
+2026-03-03 17:04:16,746 - INFO -   Total registros generados: 641876
+2026-03-03 17:04:16,747 - INFO -   Distribución por método: {'WMA': 251640, 'SES': 57460, 'CROSTON': 201558, 'PLAN_DIRECTO': 17703, 'PROGRAMA': 682, 'HIBRIDO': 114840}
+2026-03-03 17:04:16,753 - INFO - Persistiendo 641876 pronósticos en Supabase...
+2026-03-03 17:04:18,980 - INFO -   Tabla truncada exitosamente.
+2026-03-03 17:04:19,968 - INFO -   Insertado batch 1 (500/641876)
+2026-03-03 17:04:27,372 - INFO -   Insertado batch 11 (5500/641876)
+2026-03-03 17:04:33,764 - INFO -   Insertado batch 21 (10500/641876)
+2026-03-03 17:04:40,138 - INFO -   Insertado batch 31 (15500/641876)
+2026-03-03 17:04:46,842 - INFO -   Insertado batch 41 (20500/641876)
+2026-03-03 17:04:53,172 - INFO -   Insertado batch 51 (25500/641876)
+2026-03-03 17:04:59,753 - INFO -   Insertado batch 61 (30500/641876)
+2026-03-03 17:05:06,629 - INFO -   Insertado batch 71 (35500/641876)
+2026-03-03 17:05:12,825 - INFO -   Insertado batch 81 (40500/641876)
+2026-03-03 17:05:19,172 - INFO -   Insertado batch 91 (45500/641876)
+2026-03-03 17:05:25,850 - INFO -   Insertado batch 101 (50500/641876)
+2026-03-03 17:05:32,173 - INFO -   Insertado batch 111 (55500/641876)
+2026-03-03 17:05:38,503 - INFO -   Insertado batch 121 (60500/641876)
+2026-03-03 17:05:44,932 - INFO -   Insertado batch 131 (65500/641876)
+2026-03-03 17:05:51,849 - INFO -   Insertado batch 141 (70500/641876)
+2026-03-03 17:05:58,154 - INFO -   Insertado batch 151 (75500/641876)
+2026-03-03 17:06:04,452 - INFO -   Insertado batch 161 (80500/641876)
+2026-03-03 17:06:11,376 - INFO -   Insertado batch 171 (85500/641876)
+2026-03-03 17:06:18,003 - INFO -   Insertado batch 181 (90500/641876)
+2026-03-03 17:06:24,525 - INFO -   Insertado batch 191 (95500/641876)
+2026-03-03 17:06:30,748 - INFO -   Insertado batch 201 (100500/641876)
+2026-03-03 17:06:37,285 - INFO -   Insertado batch 211 (105500/641876)
+2026-03-03 17:06:43,866 - INFO -   Insertado batch 221 (110500/641876)
+2026-03-03 17:06:50,703 - INFO -   Insertado batch 231 (115500/641876)
+2026-03-03 17:06:57,265 - INFO -   Insertado batch 241 (120500/641876)
+2026-03-03 17:07:03,695 - INFO -   Insertado batch 251 (125500/641876)
+2026-03-03 17:07:11,193 - INFO -   Insertado batch 261 (130500/641876)
+2026-03-03 17:07:18,084 - INFO -   Insertado batch 271 (135500/641876)
+2026-03-03 17:07:24,778 - INFO -   Insertado batch 281 (140500/641876)
+2026-03-03 17:07:31,776 - INFO -   Insertado batch 291 (145500/641876)
+2026-03-03 17:07:38,190 - INFO -   Insertado batch 301 (150500/641876)
+2026-03-03 17:07:44,997 - INFO -   Insertado batch 311 (155500/641876)
+2026-03-03 17:07:51,787 - INFO -   Insertado batch 321 (160500/641876)
+2026-03-03 17:07:58,377 - INFO -   Insertado batch 331 (165500/641876)
+2026-03-03 17:08:05,753 - INFO -   Insertado batch 341 (170500/641876)
+2026-03-03 17:08:12,713 - INFO -   Insertado batch 351 (175500/641876)
+2026-03-03 17:08:19,101 - INFO -   Insertado batch 361 (180500/641876)
+2026-03-03 17:08:26,372 - INFO -   Insertado batch 371 (185500/641876)
+2026-03-03 17:08:32,926 - INFO -   Insertado batch 381 (190500/641876)
+2026-03-03 17:08:40,037 - INFO -   Insertado batch 391 (195500/641876)
+2026-03-03 17:08:46,849 - INFO -   Insertado batch 401 (200500/641876)
+2026-03-03 17:08:54,596 - INFO -   Insertado batch 411 (205500/641876)
+2026-03-03 17:09:03,546 - INFO -   Insertado batch 421 (210500/641876)
+2026-03-03 17:09:13,204 - INFO -   Insertado batch 431 (215500/641876)
+2026-03-03 17:09:22,153 - INFO -   Insertado batch 441 (220500/641876)
+2026-03-03 17:09:30,648 - INFO -   Insertado batch 451 (225500/641876)
+2026-03-03 17:09:39,508 - INFO -   Insertado batch 461 (230500/641876)
+2026-03-03 17:09:47,852 - INFO -   Insertado batch 471 (235500/641876)
+2026-03-03 17:09:57,006 - INFO -   Insertado batch 481 (240500/641876)
+2026-03-03 17:10:04,834 - INFO -   Insertado batch 491 (245500/641876)
+2026-03-03 17:10:13,568 - INFO -   Insertado batch 501 (250500/641876)
+2026-03-03 17:10:21,658 - INFO -   Insertado batch 511 (255500/641876)
+2026-03-03 17:10:29,806 - INFO -   Insertado batch 521 (260500/641876)
+2026-03-03 17:10:37,773 - INFO -   Insertado batch 531 (265500/641876)
+2026-03-03 17:10:46,180 - INFO -   Insertado batch 541 (270500/641876)
+2026-03-03 17:10:54,237 - INFO -   Insertado batch 551 (275500/641876)
+2026-03-03 17:11:02,281 - INFO -   Insertado batch 561 (280500/641876)
+2026-03-03 17:11:10,485 - INFO -   Insertado batch 571 (285500/641876)
+2026-03-03 17:11:18,956 - INFO -   Insertado batch 581 (290500/641876)
+2026-03-03 17:11:28,025 - INFO -   Insertado batch 591 (295500/641876)
+2026-03-03 17:11:36,944 - INFO -   Insertado batch 601 (300500/641876)
+2026-03-03 17:11:44,842 - INFO -   Insertado batch 611 (305500/641876)
+2026-03-03 17:11:52,188 - INFO -   Insertado batch 621 (310500/641876)
+2026-03-03 17:11:59,645 - INFO -   Insertado batch 631 (315500/641876)
+2026-03-03 17:12:07,371 - INFO -   Insertado batch 641 (320500/641876)
+2026-03-03 17:12:15,366 - INFO -   Insertado batch 651 (325500/641876)
+2026-03-03 17:12:23,450 - INFO -   Insertado batch 661 (330500/641876)
+2026-03-03 17:12:31,318 - INFO -   Insertado batch 671 (335500/641876)
+2026-03-03 17:12:40,146 - INFO -   Insertado batch 681 (340500/641876)
+2026-03-03 17:12:48,297 - INFO -   Insertado batch 691 (345500/641876)
+2026-03-03 17:12:56,688 - INFO -   Insertado batch 701 (350500/641876)
+2026-03-03 17:13:04,963 - INFO -   Insertado batch 711 (355500/641876)
+2026-03-03 17:13:13,518 - INFO -   Insertado batch 721 (360500/641876)
+2026-03-03 17:13:21,210 - INFO -   Insertado batch 731 (365500/641876)
+2026-03-03 17:13:29,497 - INFO -   Insertado batch 741 (370500/641876)
+2026-03-03 17:13:38,363 - INFO -   Insertado batch 751 (375500/641876)
+2026-03-03 17:13:46,828 - INFO -   Insertado batch 761 (380500/641876)
+2026-03-03 17:13:55,883 - INFO -   Insertado batch 771 (385500/641876)
+2026-03-03 17:14:04,323 - INFO -   Insertado batch 781 (390500/641876)
+2026-03-03 17:14:13,349 - INFO -   Insertado batch 791 (395500/641876)
+2026-03-03 17:14:22,778 - INFO -   Insertado batch 801 (400500/641876)
+2026-03-03 17:14:31,785 - INFO -   Insertado batch 811 (405500/641876)
+2026-03-03 17:14:40,481 - INFO -   Insertado batch 821 (410500/641876)
+2026-03-03 17:14:49,296 - INFO -   Insertado batch 831 (415500/641876)
+2026-03-03 17:14:57,983 - INFO -   Insertado batch 841 (420500/641876)
+2026-03-03 17:15:07,427 - INFO -   Insertado batch 851 (425500/641876)
+2026-03-03 17:15:16,362 - INFO -   Insertado batch 861 (430500/641876)
+2026-03-03 17:15:24,725 - INFO -   Insertado batch 871 (435500/641876)
+2026-03-03 17:15:33,376 - INFO -   Insertado batch 881 (440500/641876)
+2026-03-03 17:15:42,404 - INFO -   Insertado batch 891 (445500/641876)
+2026-03-03 17:15:50,867 - INFO -   Insertado batch 901 (450500/641876)
+2026-03-03 17:15:59,110 - INFO -   Insertado batch 911 (455500/641876)
+2026-03-03 17:16:07,964 - INFO -   Insertado batch 921 (460500/641876)
+2026-03-03 17:16:16,492 - INFO -   Insertado batch 931 (465500/641876)
+2026-03-03 17:16:25,034 - INFO -   Insertado batch 941 (470500/641876)
+2026-03-03 17:16:34,154 - INFO -   Insertado batch 951 (475500/641876)
+2026-03-03 17:16:42,607 - INFO -   Insertado batch 961 (480500/641876)
+2026-03-03 17:16:51,490 - INFO -   Insertado batch 971 (485500/641876)
+2026-03-03 17:17:00,503 - INFO -   Insertado batch 981 (490500/641876)
+2026-03-03 17:17:09,029 - INFO -   Insertado batch 991 (495500/641876)
+2026-03-03 17:17:17,904 - INFO -   Insertado batch 1001 (500500/641876)
+2026-03-03 17:17:27,094 - INFO -   Insertado batch 1011 (505500/641876)
+2026-03-03 17:17:35,005 - INFO -   Insertado batch 1021 (510500/641876)
+2026-03-03 17:17:43,706 - INFO -   Insertado batch 1031 (515500/641876)
+2026-03-03 17:17:51,273 - INFO -   Insertado batch 1041 (520500/641876)
+2026-03-03 17:17:59,961 - INFO -   Insertado batch 1051 (525500/641876)
+2026-03-03 17:18:08,175 - INFO -   Insertado batch 1061 (530500/641876)
+2026-03-03 17:18:15,962 - INFO -   Insertado batch 1071 (535500/641876)
+2026-03-03 17:18:23,693 - INFO -   Insertado batch 1081 (540500/641876)
+2026-03-03 17:18:32,011 - INFO -   Insertado batch 1091 (545500/641876)
+2026-03-03 17:18:41,154 - INFO -   Insertado batch 1101 (550500/641876)
+2026-03-03 17:18:49,911 - INFO -   Insertado batch 1111 (555500/641876)
+2026-03-03 17:18:58,845 - INFO -   Insertado batch 1121 (560500/641876)
+2026-03-03 17:19:08,016 - INFO -   Insertado batch 1131 (565500/641876)
+2026-03-03 17:19:16,456 - INFO -   Insertado batch 1141 (570500/641876)
+2026-03-03 17:19:23,919 - INFO -   Insertado batch 1151 (575500/641876)
+2026-03-03 17:19:32,621 - INFO -   Insertado batch 1161 (580500/641876)
+2026-03-03 17:19:41,512 - INFO -   Insertado batch 1171 (585500/641876)
+2026-03-03 17:19:50,423 - INFO -   Insertado batch 1181 (590500/641876)
+2026-03-03 17:19:59,377 - INFO -   Insertado batch 1191 (595500/641876)
+2026-03-03 17:20:08,580 - INFO -   Insertado batch 1201 (600500/641876)
+2026-03-03 17:20:17,750 - INFO -   Insertado batch 1211 (605500/641876)
+2026-03-03 17:20:26,142 - INFO -   Insertado batch 1221 (610500/641876)
+2026-03-03 17:20:34,873 - INFO -   Insertado batch 1231 (615500/641876)
+2026-03-03 17:20:43,925 - INFO -   Insertado batch 1241 (620500/641876)
+2026-03-03 17:20:52,415 - INFO -   Insertado batch 1251 (625500/641876)
+2026-03-03 17:21:01,156 - INFO -   Insertado batch 1261 (630500/641876)
+2026-03-03 17:21:10,385 - INFO -   Insertado batch 1271 (635500/641876)
+2026-03-03 17:21:18,981 - INFO -   Insertado batch 1281 (640500/641876)
+2026-03-03 17:21:21,221 - INFO -   Persistencia completada: 641876/641876 registros.
+2026-03-03 17:21:21,882 - INFO -   Tiempo total: 1096.0 segundos
+2026-03-03 17:21:21,883 - INFO - ============================================================
+2026-03-03 17:21:21,883 - INFO -   MOTOR DE PRONÓSTICOS — Completado exitosamente
+2026-03-03 17:21:21,883 - INFO - ============================================================

@@ -11,7 +11,11 @@ import { CriticalStockPage } from './pages/CriticalStockPage';
 import { DeviationAnalysisPage } from './pages/DeviationAnalysisPage';
 import { MasterReport } from './pages/MasterReport';
 import { Configuration } from './pages/Configuration';
+import { CognitiveAssistant } from './pages/CognitiveAssistant';
+import { AnomalyAlertsPage } from './pages/AnomalyAlertsPage';
 import { FilterBar } from './components/FilterBar';
+import { SyncStatusWidget } from './components/SyncStatusWidget';
+import { FloatingAssistant } from './components/FloatingAssistant';
 
 
 enum View {
@@ -23,6 +27,8 @@ enum View {
   DEVIATION_ANALYSIS = 'deviation_analysis',
   PROJECTION = 'projection',
   MASTER_REPORT = 'master_report',
+  COGNITIVE_ASSISTANT = 'cognitive_assistant',
+  ANOMALY_ALERTS = 'anomaly_alerts',
   CONFIGURATION = 'configuration',
 }
 
@@ -43,11 +49,11 @@ const AppContent: React.FC = () => {
   }
 
   // Global Segmentation Filters
-  const [selectedJerarquia, setSelectedJerarquia] = useState('');
+  const [selectedJerarquia, setSelectedJerarquia] = useState('Barras de Constr.');
   const [selectedGrupo, setSelectedGrupo] = useState('');
   const [selectedProceso, setSelectedProceso] = useState<string[]>([]);
-  const [showManufacturedOnly, setShowManufacturedOnly] = useState(false);
-  const [showOnlyPlanned, setShowOnlyPlanned] = useState(false);
+  const [showManufacturedOnly, setShowManufacturedOnly] = useState(true);
+  const [showOnlyPlanned, setShowOnlyPlanned] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredSkus = skus.filter(s =>
@@ -89,6 +95,8 @@ const AppContent: React.FC = () => {
           filteredSkus={filteredSkus}
         />
       );
+      case View.COGNITIVE_ASSISTANT: return <CognitiveAssistant />;
+      case View.ANOMALY_ALERTS: return <AnomalyAlertsPage />;
       case View.CONFIGURATION: return <Configuration />;
       default: return <Dashboard onViewChange={setCurrentView} filteredSkus={filteredSkus} />;
     }
@@ -128,6 +136,7 @@ const AppContent: React.FC = () => {
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 px-2">Análisis</div>
           <NavItem view={View.DASHBOARD} icon="dashboard" label="Dashboard General" />
+          <NavItem view={View.COGNITIVE_ASSISTANT} icon="psychology" label="Asistente IA (NLP)" />
           <NavItem view={View.DEMAND} icon="trending_up" label="Plan. de Demanda" />
 
           <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 mt-6 px-2">Operaciones</div>
@@ -138,6 +147,7 @@ const AppContent: React.FC = () => {
 
           <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 mt-6 px-2">Gestión Crítica</div>
           <NavItem view={View.CRITICAL_STOCK} icon="warning" label="Quiebres Críticos" />
+          <NavItem view={View.ANOMALY_ALERTS} icon="monitoring" label="Anomalías de IA" />
           <NavItem view={View.DEVIATION_ANALYSIS} icon="query_stats" label="Análisis Desviación" />
 
           <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 mt-6 px-2">Sistema</div>
@@ -183,6 +193,9 @@ const AppContent: React.FC = () => {
             </p>
           </div>
 
+          {/* Widget de estado de sincronización ETL */}
+          <SyncStatusWidget />
+
         </header>
 
         <div className="p-8">
@@ -206,6 +219,7 @@ const AppContent: React.FC = () => {
           )}
           {renderContent()}
         </div>
+        <FloatingAssistant />
       </main>
     </div>
   );
