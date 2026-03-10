@@ -36,7 +36,9 @@ export const FloatingAssistant: React.FC = () => {
                 <div className="mb-4 w-80 h-96 bg-dark-900 border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
                     <div className="p-4 bg-primary-600 text-white flex justify-between items-center">
                         <div className="flex items-center gap-2">
-                            <span className="material-symbols-rounded text-xl">psychology</span>
+                            <div className="w-6 h-6 rounded-full overflow-hidden border border-white/20">
+                                <img src="logo_ai.png" alt="AI" className="w-full h-full object-cover" />
+                            </div>
                             <span className="font-bold text-sm">Quick Assist</span>
                         </div>
                         <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 rounded-full p-1 transition-colors">
@@ -69,9 +71,11 @@ export const FloatingAssistant: React.FC = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-14 h-14 rounded-full bg-primary-600 text-white flex items-center justify-center shadow-xl hover:bg-primary-500 hover:scale-110 active:scale-95 transition-all duration-300 group"
             >
-                <span className="material-symbols-rounded text-2xl group-hover:rotate-12 transition-transform">
-                    {isOpen ? 'close' : 'psychology'}
-                </span>
+                {isOpen ? (
+                    <span className="material-symbols-rounded text-2xl">close</span>
+                ) : (
+                    <img src="logo_ai.png" alt="AI Assistant" className="w-8 h-8 object-contain group-hover:rotate-12 transition-transform" />
+                )}
                 {!isOpen && (
                     <div className="absolute right-16 px-3 py-2 bg-slate-800 text-white text-[10px] font-bold rounded-lg border border-slate-700 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none uppercase tracking-widest">
                         ¿Necesitas ayuda?

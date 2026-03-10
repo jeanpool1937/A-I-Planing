@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DataProvider, useData } from './contexts/DataContext';
 import { Dashboard } from './pages/Dashboard';
 import { DemandPlanning } from './pages/DemandPlanning';
@@ -40,7 +40,13 @@ const AppContent: React.FC = () => {
     return localStorage.getItem('pcp_auth') === 'true';
   });
 
-  const [currentView, setCurrentView] = useState<View>(View.DASHBOARD);
+  const [currentView, setCurrentView] = useState<View>(() => {
+    return (localStorage.getItem('pcp_current_view') as View) || View.DASHBOARD;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('pcp_current_view', currentView);
+  }, [currentView]);
   const [sharedSelectedSku, setSharedSelectedSku] = useState<string>('');
   const { skus } = useData();
 
@@ -49,12 +55,24 @@ const AppContent: React.FC = () => {
   }
 
   // Global Segmentation Filters
-  const [selectedJerarquia, setSelectedJerarquia] = useState('Barras de Constr.');
-  const [selectedGrupo, setSelectedGrupo] = useState('');
-  const [selectedProceso, setSelectedProceso] = useState<string[]>([]);
-  const [showManufacturedOnly, setShowManufacturedOnly] = useState(true);
-  const [showOnlyPlanned, setShowOnlyPlanned] = useState(true);
+  // Global Segmentation Filters - Persisted in localStorage
+  const [selectedJerarquia, setSelectedJerarquia] = useState(() => localStorage.getItem('pcp_filter_jerarquia') || 'Barras de Constr.');
+  const [selectedGrupo, setSelectedGrupo] = useState(() => localStorage.getItem('pcp_filter_grupo') || '');
+  const [selectedProceso, setSelectedProceso] = useState<string[]>(() => {
+    const saved = localStorage.getItem('pcp_filter_proceso');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [showManufacturedOnly, setShowManufacturedOnly] = useState(() => localStorage.getItem('pcp_filter_manufactured') !== 'false');
+  const [showOnlyPlanned, setShowOnlyPlanned] = useState(() => localStorage.getItem('pcp_filter_planned') !== 'false');
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('pcp_filter_jerarquia', selectedJerarquia);
+    localStorage.setItem('pcp_filter_grupo', selectedGrupo);
+    localStorage.setItem('pcp_filter_proceso', JSON.stringify(selectedProceso));
+    localStorage.setItem('pcp_filter_manufactured', String(showManufacturedOnly));
+    localStorage.setItem('pcp_filter_planned', String(showOnlyPlanned));
+  }, [selectedJerarquia, selectedGrupo, selectedProceso, showManufacturedOnly, showOnlyPlanned]);
 
   const filteredSkus = skus.filter(s =>
     (!selectedJerarquia || s.jerarquia1 === selectedJerarquia) &&
@@ -123,8 +141,8 @@ const AppContent: React.FC = () => {
         <div className="p-6 border-b border-slate-800">
           {/* ... header content ... */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-primary-600/20">
-              <span className="material-symbols-rounded">psychology</span>
+            <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center overflow-hidden shadow-lg border border-slate-700">
+              <img src="logo_ai.png" alt="A+I Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <h1 className="text-lg font-bold text-white tracking-tight">A+I Planning</h1>

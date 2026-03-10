@@ -26,7 +26,7 @@ def _supabase_get(table: str, select: str = "*", limit: int = 15000, params: dic
         "Authorization": f"Bearer {SUPABASE_KEY}",
         "Prefer": "count=none",
     }
-    query_params = {"select": select, "limit": limit, "order": "fecha.desc"}
+    query_params = {"select": select, "limit": limit, "order": "fecha_contabilizacion.desc"}
     if params:
         query_params.update(params)
     
@@ -58,7 +58,7 @@ class AnomalyDetector:
             logger.info("Cargando datos de sap_produccion para auditoría...")
             records = _supabase_get(
                 "sap_produccion",
-                select="codigo_sku,descripcion,cantidad,fecha,tipo_movimiento",
+                select="material,texto_material,cantidad_tn,fecha_contabilizacion",
                 limit=20000
             )
 
@@ -67,11 +67,11 @@ class AnomalyDetector:
                 return 0
 
             df = pd.DataFrame(records)
-            df['cantidad'] = pd.to_numeric(df['cantidad'], errors='coerce').fillna(0).abs()
+            df['cantidad'] = pd.to_numeric(df['cantidad_tn'], errors='coerce').fillna(0).abs()
 
             # Feature Engineering
-            df['mean_sku'] = df.groupby('codigo_sku')['cantidad'].transform('mean')
-            df['std_sku'] = df.groupby('codigo_sku')['cantidad'].transform('std').fillna(0)
+            df['mean_sku'] = df.groupby('material')['cantidad'].transform('mean')
+            df['std_sku'] = df.groupby('material')['cantidad'].transform('std').fillna(0)
             df['z_score'] = (df['cantidad'] - df['mean_sku']) / (df['std_sku'] + 1e-9)
 
             features = df[['cantidad', 'z_score']].fillna(0)
@@ -99,9 +99,9 @@ class AnomalyDetector:
             alerts = []
             for _, row in anomalies.head(200).iterrows():  # Máximo 200 por ejecución
                 alerts.append({
-                    "sku_id": str(row.get('codigo_sku', 'UNKNOWN')),
-                    "sku_name": str(row.get('descripcion', ''))[:100],
-                    "movement_type": str(row.get('tipo_movimiento', 'produccion')),
+                    "sku_id": str(row.get('material', 'UNKNOWN')),
+                    "sku_name": str(row.get('texto_material', ''))[:100],
+                    "movement_type": "produccion",
                     "anomaly_score": round(float(row['anomaly_score']), 4),
                     "severity": get_severity(row['anomaly_score']),
                     "expected_value": round(float(row['mean_sku']), 2),

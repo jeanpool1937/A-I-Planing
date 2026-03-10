@@ -1,3 +1,3 @@
 @echo off
-cd /d "D:\Base de datos"
+cd /d "%~dp0"
 py daily_sync.py

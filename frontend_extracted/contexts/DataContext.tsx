@@ -187,7 +187,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Verificar si el caché es reciente (TTL de 4 horas) para evitar egress innecesario
     if (!forceRefresh) {
       const maestroExpired = await cacheService.isExpired(`cache_maestro_${selectedCountry}`, CACHE_TTL_MS);
-      if (!maestroExpired) {
+      const projExpired = await cacheService.isExpired(`cache_projected_demand`, CACHE_TTL_MS);
+      const expExpired = await cacheService.isExpired(`cache_exploded_demand`, CACHE_TTL_MS);
+
+      if (!maestroExpired && !projExpired && !expExpired) {
         addLog(`Caché válido (<4h). Omitiendo fetch a Supabase para ahorrar egress.`);
         isFetching.current = false;
         return; // Datos en caché aún frescos → no re-descargar
@@ -250,7 +253,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const endTimeNet = performance.now();
       addLog(`Descarga completada en ${((endTimeNet - startTimeNet) / 1000).toFixed(2)}s.`);
 
-      // Actualizar estados y Persistir en IndexedDB (Supera límite 5MB de LocalStorage)
+      if (rawMaestro.length === 0) {
+        addLog("Carga paralela completada. Persistiendo nuevos datos...");
+      }
+
+      // Actualizar estados y Persistir en IndexedDB
       if (maestroData) {
         let filteredMaestro = [...maestroData];
         try {
@@ -263,7 +270,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
           addLog(`Filtro Planificación: ${filteredMaestro.length} de ${beforeCount} SKUs tienen plan de producción reciente`);
         } catch (e: any) {
           console.warn("Error fetching planned SKU filter, showing all SKUs", e);
-          addLog("Advertencia: No se pudo aplicar filtro de planificación: " + e.message);
+          addLog("Advertencia: No se pudo aplicar filtro de planificación: " + (e.message || 'Error desconocido'));
         }
 
         setRawMaestro(filteredMaestro);
@@ -277,8 +284,14 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setRawHybridPlanning(hybridData);
         cacheService.set(`cache_hybrid_${selectedCountry}`, hybridData);
       }
-      if (explodedData) setRawExplodedDemand(explodedData);
-      if (projectedData) setRawProjectedDemand(projectedData);
+      if (explodedData) {
+        setRawExplodedDemand(explodedData);
+        cacheService.set(`cache_exploded_demand`, explodedData);
+      }
+      if (projectedData) {
+        setRawProjectedDemand(projectedData);
+        cacheService.set(`cache_projected_demand`, projectedData);
+      }
 
       const endTime = performance.now();
       addLog(`Carga completada en ${((endTime - startTime) / 1000).toFixed(2)}s. Total SKUs: ${maestroData ? maestroData.length : 0}`);
@@ -425,10 +438,12 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Intento de precarga desde IndexedDB para sensación de 0s (Supera 5MB limit)
     const initCache = async () => {
       try {
-        const [cM, cA, cH] = await Promise.all([
+        const [cM, cA, cH, cE, cP] = await Promise.all([
           cacheService.get(`cache_maestro_${selectedCountry}`),
           cacheService.get(`cache_aggregates_${selectedCountry}`),
-          cacheService.get(`cache_hybrid_${selectedCountry}`)
+          cacheService.get(`cache_hybrid_${selectedCountry}`),
+          cacheService.get(`cache_exploded_demand`),
+          cacheService.get(`cache_projected_demand`)
         ]);
 
         if (cM && cA && cH) {
@@ -436,6 +451,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setRawMaestro(cM);
           setRawAggregatedConsumption(cA);
           setRawHybridPlanning(cH);
+          if (cE) setRawExplodedDemand(cE);
+          if (cP) setRawProjectedDemand(cP);
+
+          // Si tenemos datos suficientes en el caché, podemos quitar el spinner inmediatamente
+          setIsLoading(false);
         }
       } catch (e) {
         console.warn("Error leyendo caché:", e);

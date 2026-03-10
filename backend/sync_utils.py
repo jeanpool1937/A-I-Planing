@@ -120,8 +120,7 @@ def sync_file(file_path: str, is_historical: bool = False, dry_run: bool = False
             logging.info(f"Finished. Total uploaded: {len(new_rows)}")
         else:
             logging.info("No new rows to upload.")
-            
-    except Exception as e: 
+    except Exception as e:
         err_msg = str(e)
         if hasattr(e, 'response') and e.response is not None:
             err_msg += f" Response: {e.response.text}"
@@ -250,7 +249,7 @@ def sync_stock_mb52(file_path: str, dry_run: bool = False):
         if not dry_run:
             # Truncate logic: Delete all rows
             del_url = f"{SUPABASE_URL}/rest/v1/sap_stock_mb52"
-            requests.delete(del_url, headers=get_headers(), params={"id": "gt.0"})
+            requests.delete(del_url, headers=get_headers(), params={"material": "not.is.null"})
             logging.info("Truncated sap_stock_mb52 successfully.")
             
             batch_size = 1000
@@ -329,7 +328,7 @@ def sync_master_data(file_path, sheet_name, table_name, clean_col_func, pk_col, 
             # pero aquí usaremos una estrategia de limpieza previa para evitar duplicados si la PK cambia
             del_url = f"{SUPABASE_URL}/rest/v1/{table_name}"
             # Truncado opcional o Upsert. El usuario suele preferir ver datos frescos.
-            requests.delete(del_url, headers=get_headers(), params={"id": "gt.0"})
+            requests.delete(del_url, headers=get_headers(), params={pk_col: "not.is.null"})
             
             batch_size = 500
             for i in range(0, len(records), batch_size):
@@ -387,7 +386,7 @@ def sync_programa_produccion(file_path: str, dry_run: bool = False):
 
         if not dry_run:
             del_url = f"{SUPABASE_URL}/rest/v1/sap_programa_produccion"
-            requests.delete(del_url, headers=get_headers(), params={"id": "gt.0"})
+            requests.delete(del_url, headers=get_headers(), params={"sku_produccion": "not.is.null"})
             logging.info("Truncated sap_programa_produccion successfully.")
             
             batch_size = 1000

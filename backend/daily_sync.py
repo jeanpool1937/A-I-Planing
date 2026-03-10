@@ -7,6 +7,7 @@ from sync_logger import log_sync_result
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from sync_utils import sync_file, sync_production_file, sync_stock_mb52, sync_programa_produccion
+from modules.api_client import call_rpc
 from agents.report_master_persistor import run_report_persistence
 from agents.forecast_engine import run_forecast
 from agents.anomaly_detector import run_anomaly_audit
@@ -32,9 +33,9 @@ def run_step(label: str, table_name: str, fn, *args):
         # TODO: refactorizar sync_utils para retornar el conteo de filas.
         rows = result if isinstance(result, int) else 0
         log_sync_result(table_name=table_name, rows_upserted=rows, status="success")
-        print(f"  ✓ {label} completado. Filas: {rows}")
+        print(f"  [OK] {label} completado. Filas: {rows}")
     except Exception as e:
-        print(f"  ✗ Error en {label}: {e}")
+        print(f"  [ERROR] Error en {label}: {e}")
         log_sync_result(table_name=table_name, rows_upserted=0, status="error", error_msg=str(e)[:500])
 
 
@@ -46,31 +47,40 @@ if __name__ == "__main__":
     run_step("Syncing Programa Produccion",    "sap_programa_produccion",  sync_programa_produccion, PROGRAMA_FILE_PATH)
     run_step("Syncing Stock MB52",             "sap_stock_mb52",           sync_stock_mb52,        MB52_FILE_PATH)
 
+    print("\n--- Actualizando Plan de Inventario Híbrido ---")
+    try:
+        res = call_rpc("refresh_inventory_hybrid_plan")
+        log_sync_result(table_name="refresh_inventory_hybrid_plan_rpc", rows_upserted=1, status="success")
+        print(f"  [OK] Plan híbrido actualizado: {res}")
+    except Exception as e:
+        print(f"  [ERROR] Error al actualizar plan híbrido: {e}")
+        log_sync_result(table_name="refresh_inventory_hybrid_plan_rpc", rows_upserted=0, status="error", error_msg=str(e)[:500])
+
     print("\n--- Refrescando Reporte Maestro de Proyección ---")
     try:
         run_report_persistence()
         log_sync_result(table_name="sap_reporte_maestro", rows_upserted=0, status="success")
-        print("  ✓ Reporte Maestro completado.")
+        print("  [OK] Reporte Maestro completado.")
     except Exception as e:
-        print(f"  ✗ Error al refrescar reporte: {e}")
+        print(f"  [ERROR] Error al refrescar reporte: {e}")
         log_sync_result(table_name="sap_reporte_maestro", rows_upserted=0, status="error", error_msg=str(e)[:500])
 
     print("\n--- Generando Pronósticos Híbridos (90 días) ---")
     try:
         forecast_count = run_forecast()
         log_sync_result(table_name="sap_pronostico_diario", rows_upserted=forecast_count or 0, status="success")
-        print(f"  ✓ Pronósticos generados: {forecast_count} registros.")
+        print(f"  [OK] Pronósticos generados: {forecast_count} registros.")
     except Exception as e:
-        print(f"  ✗ Error al generar pronósticos: {e}")
+        print(f"  [ERROR] Error al generar pronósticos: {e}")
         log_sync_result(table_name="sap_pronostico_diario", rows_upserted=0, status="error", error_msg=str(e)[:500])
 
     print("\n--- Auditoría de IA: Detección de Anomalías ---")
     try:
         anomaly_count = run_anomaly_audit()
         log_sync_result(table_name="ai_anomaly_alerts", rows_upserted=anomaly_count or 0, status="success")
-        print(f"  ✓ Auditoría completada: {anomaly_count} anomalías detectadas.")
+        print(f"  [OK] Auditoría completada: {anomaly_count} anomalías detectadas.")
     except Exception as e:
-        print(f"  ✗ Error en auditoría de IA: {e}")
+        print(f"  [ERROR] Error en auditoría de IA: {e}")
         log_sync_result(table_name="ai_anomaly_alerts", rows_upserted=0, status="error", error_msg=str(e)[:500])
 
     print("\n=== Sincronización Diaria Completada ===")

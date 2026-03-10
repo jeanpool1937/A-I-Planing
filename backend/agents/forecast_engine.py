@@ -629,7 +629,7 @@ def persist_forecasts(records):
     try:
         headers = get_headers()
         del_url = f"{SUPABASE_URL}/rest/v1/sap_pronostico_diario"
-        resp = requests.delete(del_url, headers=headers, params={"id": "gt.0"})
+        resp = requests.delete(del_url, headers=headers, params={"sku_id": "not.is.null"})
         if resp.status_code not in (200, 204):
             logging.warning(f"Truncate retornó {resp.status_code}: {resp.text[:200]}")
         else:

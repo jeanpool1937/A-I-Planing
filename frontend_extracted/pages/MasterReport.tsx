@@ -43,24 +43,20 @@ export const MasterReport: React.FC<MasterReportProps> = ({ filteredSkus }) => {
         const realMovMap: Record<string, number> = {};
 
         if (reportData) {
-            // 1. Real Fabricado (sap_produccion)
+            // 1. Real Fabricado (sap_produccion) - Ahora viene agregado desde RPC
             reportData.produccion.forEach(r => {
-                const sid = (r.material || '').toString().replace(/^0+/, '');
-                prodRealMap[sid] = (prodRealMap[sid] || 0) + (Number(r.cantidad_tn) || 0);
+                const sid = (r.sku || '').toString().replace(/^0+/, '');
+                prodRealMap[sid] = (prodRealMap[sid] || 0) + (Number(r.total) || 0);
             });
             // 2. Proyectado Fabricado (sap_programa_produccion)
             reportData.programa.forEach(p => {
-                const sid = (p.sku_produccion || '').toString().replace(/^0+/, '');
-                prodPlanMap[sid] = (prodPlanMap[sid] || 0) + (Number(p.cantidad_programada) || 0);
+                const sid = (p.sku || '').toString().replace(/^0+/, '');
+                prodPlanMap[sid] = (prodPlanMap[sid] || 0) + (Number(p.total) || 0);
             });
-            // 3. Real Venta/Movimientos (sap_consumo_movimientos) - Venta, Consumo, Traspaso
-            const validTypes = ['VENTA', 'CONSUMO', 'TRASPASO'];
+            // 3. Real Venta/Movimientos (sap_consumo_movimientos)
             reportData.movimientos.forEach(m => {
-                const type = (m.tipo2 || '').toUpperCase();
-                const sid = (m.material_clave || '').toString().replace(/^0+/, '');
-                if (validTypes.some(vt => type.includes(vt))) {
-                    realMovMap[sid] = (realMovMap[sid] || 0) + (Number(m.cantidad_final_tn) || 0);
-                }
+                const sid = (m.sku || '').toString().replace(/^0+/, '');
+                realMovMap[sid] = (realMovMap[sid] || 0) + (Number(m.total) || 0);
             });
         } else {
             // FALLBACK: Use rawAggregatedConsumption for Real Venta/Consumo if it's the current month
@@ -244,8 +240,8 @@ export const MasterReport: React.FC<MasterReportProps> = ({ filteredSkus }) => {
                         onClick={syncToDatabase}
                         disabled={syncing || reportRecords.length === 0}
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all font-medium text-sm shadow-lg overflow-hidden relative ${syncing
-                                ? 'bg-slate-800 text-slate-400 cursor-wait'
-                                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20'
+                            ? 'bg-slate-800 text-slate-400 cursor-wait'
+                            : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20'
                             }`}
                     >
                         {syncing && (

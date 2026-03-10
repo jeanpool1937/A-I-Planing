@@ -61,8 +61,8 @@ export const CognitiveAssistant: React.FC = () => {
             {/* Chat Header */}
             <div className="px-6 py-4 bg-slate-800/50 border-b border-slate-700 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center text-white">
-                        <span className="material-symbols-rounded">psychology</span>
+                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden border border-slate-700 shadow-lg">
+                        <img src="logo_ai.png" alt="AI Assistant" className="w-full h-full object-cover" />
                     </div>
                     <div>
                         <h3 className="text-white font-semibold">A+I Cognitive Assistant</h3>
@@ -80,8 +80,8 @@ export const CognitiveAssistant: React.FC = () => {
                 {messages.map((m, i) => (
                     <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[80%] p-4 rounded-2xl ${m.role === 'user'
-                                ? 'bg-primary-600 text-white rounded-tr-none'
-                                : 'bg-slate-800 text-slate-100 border border-slate-700 rounded-tl-none'
+                            ? 'bg-primary-600 text-white rounded-tr-none'
+                            : 'bg-slate-800 text-slate-100 border border-slate-700 rounded-tl-none'
                             }`}>
                             <div className="text-sm whitespace-pre-wrap leading-relaxed">
                                 {m.content}

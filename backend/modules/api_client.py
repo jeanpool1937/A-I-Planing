@@ -40,3 +40,9 @@ def patch_to_supabase(endpoint, payload, params):
     response = requests.patch(url, headers=get_headers(), json=payload, params=params)
     response.raise_for_status()
     return response
+
+def call_rpc(rpc_name, payload=None):
+    url = f"{SUPABASE_URL}/rest/v1/rpc/{rpc_name}"
+    response = requests.post(url, headers=get_headers(), json=payload or {})
+    response.raise_for_status()
+    return response.json()

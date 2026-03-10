@@ -73,10 +73,11 @@ export const api = {
      * Retorna registros con { mes, cantidad } para el mes actual y siguiente.
      */
     getDemandaProyectada: async (skuId: string) => {
+        const paddedSkuId = skuId.padStart(18, '0');
         const { data, error } = await supabase
             .from('sap_demanda_proyectada')
             .select('mes, cantidad')
-            .eq('sku_id', skuId);
+            .or(`sku_id.eq.${skuId},sku_id.eq.${paddedSkuId}`);
 
         if (error) {
             console.warn('Error fetching demanda proyectada:', error.message);
@@ -133,21 +134,24 @@ export const api = {
         return allData;
     },
 
-    /**
-     * Obtiene el stock actual (snapshot MB52) para un SKU.
-     * Retorna desglose por centro/almacén.
-     */
     getStockActual: async (skuId: string) => {
+        const paddedSkuId = skuId.padStart(18, '0');
         const { data, error } = await supabase
             .from('sap_stock_mb52')
-            .select('centro, almacen, cantidad_stock, almacen_valido')
-            .eq('material', skuId);
+            .select('centro, almacen, libre_utilizacion, inspeccion_calidad')
+            .or(`material.eq.${skuId},material.eq.${paddedSkuId}`);
 
         if (error) {
             console.warn('Error fetching stock actual:', error.message);
             return [];
         }
-        return data || [];
+
+        return (data || []).map(row => ({
+            centro: row.centro,
+            almacen: row.almacen,
+            cantidad_stock: Number(row.libre_utilizacion || 0) + Number(row.inspeccion_calidad || 0),
+            almacen_valido: 'OK'
+        }));
     },
 
     /**
@@ -203,10 +207,11 @@ export const api = {
      * Obtiene la producción programada (supply in) para un SKU desde el Plan de Producción.
      */
     getProduccionProgramada: async (skuId: string, startDate: string, endDate: string) => {
+        const paddedSkuId = skuId.padStart(18, '0');
         const { data, error } = await supabase
             .from('sap_programa_produccion')
             .select('fecha, cantidad_programada, clase_proceso')
-            .eq('sku_produccion', skuId)
+            .or(`sku_produccion.eq.${skuId},sku_produccion.eq.${paddedSkuId}`)
             .gte('fecha', startDate)
             .lte('fecha', endDate);
 
@@ -227,10 +232,11 @@ export const api = {
      * Obtiene consumos de producción programados (demand out) para un SKU como materia prima.
      */
     getConsumoProduccion: async (skuId: string, startDate: string, endDate: string) => {
+        const paddedSkuId = skuId.padStart(18, '0');
         const { data, error } = await supabase
             .from('sap_programa_produccion')
             .select('fecha, cantidad_programada, clase_proceso')
-            .eq('sku_consumo', skuId)
+            .or(`sku_consumo.eq.${skuId},sku_consumo.eq.${paddedSkuId}`)
             .gte('fecha', startDate)
             .lte('fecha', endDate);
 
@@ -251,10 +257,11 @@ export const api = {
      * Obtiene el Factor de Estacionalidad e Incremento (FEI) para un SKU.
      */
     getFEIFactor: async (skuId: string): Promise<number> => {
+        const paddedSkuId = skuId.padStart(18, '0');
         const { data, error } = await supabase
             .from('sap_plan_inventario_hibrido')
             .select('factor_fin_mes')
-            .eq('sku_id', skuId)
+            .or(`sku_id.eq.${skuId},sku_id.eq.${paddedSkuId}`)
             .single();
 
         if (error) {
@@ -500,100 +507,63 @@ export const api = {
     // 2. Get Production Plan vs Real (Monthly)
     getProductionDeviation: async (monthStr: string) => {
         // monthStr format: 'YYYY-MM'
-
-        // A. Plan: sap_programa_produccion
         const startOfMonth = `${monthStr}-01`;
-        // Calculate end of month
         const [year, month] = monthStr.split('-').map(Number);
         const lastDay = new Date(year, month, 0).getDate();
         const endOfMonth = `${monthStr}-${lastDay}`;
 
-        const { data: planData, error: planError } = await supabase
-            .from('sap_programa_produccion')
-            .select('*')
-            .gte('fecha', startOfMonth)
-            .lte('fecha', endOfMonth);
+        const { data, error } = await supabase.rpc('rpc_get_production_deviation', {
+            p_start_date: startOfMonth,
+            p_end_date: endOfMonth
+        });
 
-        if (planError) throw planError;
+        if (error) {
+            console.error('RPC Error (Production Deviation):', error);
+            throw error;
+        }
 
-        // B. Real: sap_produccion
-        const { data: realData, error: realError } = await supabase
-            .from('sap_produccion')
-            .select('*')
-            .gte('fecha_contabilizacion', startOfMonth)
-            .lte('fecha_contabilizacion', endOfMonth)
-            .limit(1000); // Limit para evitar bloqueo, idealmente usar agregación
-
-        if (realError) throw realError;
-
-        return { plan: planData || [], real: realData || [] };
+        // RPC returns { plan: [...], real: [...] }
+        return data || { plan: [], real: [] };
     },
 
     // 3. Get Sales Deviation (PO Historico vs Movimientos Tipo2=Venta)
     getSalesDeviation: async (monthStr: string) => {
         const startOfMonth = `${monthStr}-01`;
-        // Calculate end of month
         const [year, month] = monthStr.split('-').map(Number);
         const lastDay = new Date(year, month, 0).getDate();
         const endOfMonth = `${monthStr}-${lastDay}`;
 
-        // A. Plan: PO Historico (sap_demanda_proyectada)
-        // Note: sap_demanda_proyectada 'mes' is usually first day of month
-        const { data: planData, error: planError } = await supabase
-            .from('sap_demanda_proyectada')
-            .select('*')
-            .eq('mes', startOfMonth);
+        const { data, error } = await supabase.rpc('rpc_get_sales_deviation', {
+            p_start_date: startOfMonth,
+            p_end_date: endOfMonth
+        });
 
-        if (planError) throw planError;
+        if (error) {
+            console.error('RPC Error (Sales Deviation):', error);
+            throw error;
+        }
 
-        // B. Real: Movimientos (tipo2 = 'Venta' or similar)
-        const { data: realData, error: realError } = await supabase
-            .from('sap_consumo_movimientos')
-            .select('*')
-            .gte('fecha', startOfMonth)
-            .lte('fecha', endOfMonth)
-            // Filter by 'Venta' (or whatever value user confirms, generally 'Venta')
-            // Using ilike for safety
-            .ilike('tipo2', '%Venta%')
-            .limit(1000);
-
-        if (realError) throw realError;
-
-        return { plan: planData || [], real: realData || [] };
+        return data || { plan: [], real: [] };
     },
 
     // 4. Get Consumption Deviation (Programa Produccion Insumos vs Movimientos Tipo2=Consumo)
     getConsumptionDeviation: async (monthStr: string) => {
         const startOfMonth = `${monthStr}-01`;
-        // Calculate end of month
         const [year, month] = monthStr.split('-').map(Number);
         const lastDay = new Date(year, month, 0).getDate();
         const endOfMonth = `${monthStr}-${lastDay}`;
 
-        // A. Plan: sap_programa_produccion (Insumos)
-        // We look at 'sku_consumo' field in the program
-        const { data: planData, error: planError } = await supabase
-            .from('sap_programa_produccion')
-            .select('*')
-            .gte('fecha', startOfMonth)
-            .lte('fecha', endOfMonth)
-            .not('sku_consumo', 'is', null)
-            .neq('sku_consumo', '0');
+        const { data, error } = await supabase.rpc('rpc_get_consumption_deviation', {
+            p_start_date: startOfMonth,
+            p_end_date: endOfMonth
+        });
 
-        if (planError) throw planError;
+        if (error) {
+            console.error('RPC Error (Consumption Deviation):', error);
+            throw error;
+        }
 
-        // B. Real: Movimientos (tipo2 = 'Consumo')
-        const { data: realData, error: realError } = await supabase
-            .from('sap_consumo_movimientos')
-            .select('*')
-            .gte('fecha', startOfMonth)
-            .lte('fecha', endOfMonth)
-            .ilike('tipo2', '%Consumo%')
-            .limit(1000);
-
-        if (realError) throw realError;
-
-        return { plan: planData || [], real: realData || [] };
+        return data || { plan: [], real: [] };
     },
 
     /**
@@ -715,8 +685,8 @@ export const api = {
      * Triggers the PGSQL function to update L30d, 6m, and FEI immediately.
      */
     /**
-     * MASTER REPORT SPECIFIC: Fetches all detailed movements, production, and planning for a month.
-     * Includes automatic pagination for many records.
+     * MASTER REPORT SPECIFIC: Uses optimized RPC to fetch aggregated details for a month.
+     * Prevents downloading 100,000+ rows directly to the browser.
      */
     getMasterReportDetails: async (monthStr: string) => {
         const startOfMonth = `${monthStr}-01`;
@@ -724,45 +694,20 @@ export const api = {
         const lastDay = new Date(year, month, 0).getDate();
         const endOfMonth = `${monthStr}-${lastDay}`;
 
-        const fetchAll = async (table: string, gteCol: string, lteCol: string) => {
-            let all: any[] = [];
-            let page = 0;
-            const pageSize = 1000;
-            let hasMore = true;
+        const { data, error } = await supabase.rpc('rpc_get_master_report_aggregates', {
+            p_start_date: startOfMonth,
+            p_end_date: endOfMonth
+        });
 
-            while (hasMore) {
-                const { data, error } = await supabase
-                    .from(table)
-                    .select('*')
-                    .gte(gteCol, startOfMonth)
-                    .lte(lteCol, endOfMonth)
-                    .range(page * pageSize, (page + 1) * pageSize - 1);
+        if (error) {
+            console.error('RPC Error (Master Report Aggregates):', error);
+            throw error;
+        }
 
-                if (error) throw error;
-                if (data && data.length > 0) {
-                    all = [...all, ...data];
-                    if (data.length < pageSize) hasMore = false;
-                    page++;
-                } else {
-                    hasMore = false;
-                }
-            }
-            return all;
-        };
-
-        const [movimientos, produccion, programa] = await Promise.all([
-            fetchAll('sap_consumo_movimientos', 'fecha', 'fecha'),
-            fetchAll('sap_produccion', 'fecha_contabilizacion', 'fecha_contabilizacion'),
-            supabase.from('sap_programa_produccion')
-                .select('sku_produccion, cantidad_programada, sku_consumo')
-                .gte('fecha', startOfMonth)
-                .lte('fecha', endOfMonth)
-        ]);
-
-        return {
-            movimientos: movimientos || [],
-            produccion: produccion || [],
-            programa: (programa.data as any[]) || []
+        return data || {
+            movimientos: [],
+            produccion: [],
+            programa: []
         };
     },
 
