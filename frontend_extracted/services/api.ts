@@ -621,6 +621,9 @@ export const api = {
      * Detecta automáticamente si el SKU es PT, ST o Dual y usa la fuente de plan correcta.
      */
     getHistoricalValidation: async (skuId: string) => {
+        // Normalizar SKU: eliminar ceros iniciales para consistencia entre tablas
+        const normalizedSku = skuId.toString().replace(/^0+/, '');
+        
         const today = new Date();
         const thirtyDaysAgo = new Date(today);
         thirtyDaysAgo.setDate(today.getDate() - 30);
@@ -635,7 +638,7 @@ export const api = {
             supabase
                 .from('sap_consumo_movimientos')
                 .select('fecha, cantidad_final_tn, tipo2')
-                .eq('material_clave', skuId)
+                .eq('material_clave', normalizedSku)
                 .gte('fecha', startStr)
                 .lte('fecha', endStr),
 
@@ -643,14 +646,14 @@ export const api = {
             supabase
                 .from('sap_demanda_proyectada')
                 .select('mes, cantidad')
-                .eq('sku_id', skuId)
+                .eq('sku_id', normalizedSku)
                 .gte('mes', startMonth),
 
             // 3. Programa de Producción con consumo del SKU como insumo (para ST/MP)
             supabase
                 .from('sap_programa_produccion')
                 .select('fecha, cantidad_programada, sku_produccion')
-                .eq('sku_consumo', skuId)
+                .eq('sku_consumo', normalizedSku)
                 .gte('fecha', startStr)
                 .lte('fecha', endStr)
         ]);
