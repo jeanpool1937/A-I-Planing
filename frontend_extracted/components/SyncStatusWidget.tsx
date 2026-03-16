@@ -97,7 +97,14 @@ export const SyncStatusWidget: React.FC = () => {
 
     // Calcular estado global del día
     const todayUpdatedTables = new Set(logs.map((l) => l.table_name));
-    const hasErrors = logs.some((l) => l.status === 'error');
+    const latestByTable = logs.reduce<Record<string, SyncLog>>((acc, log) => {
+        if (!acc[log.table_name] || log.executed_at > acc[log.table_name].executed_at) {
+            acc[log.table_name] = log;
+        }
+        return acc;
+    }, {});
+
+    const hasErrors = Object.values(latestByTable).some((l) => l.status === 'error');
     const allTablesUpdated = EXPECTED_TABLES.every((t) => todayUpdatedTables.has(t));
     const noDataToday = logs.length === 0;
 
@@ -147,13 +154,7 @@ export const SyncStatusWidget: React.FC = () => {
 
     const cfg = statusConfig[globalStatus];
 
-    // Último log por tabla (el más reciente)
-    const latestByTable = logs.reduce<Record<string, SyncLog>>((acc, log) => {
-        if (!acc[log.table_name] || log.executed_at > acc[log.table_name].executed_at) {
-            acc[log.table_name] = log;
-        }
-        return acc;
-    }, {});
+    // Ya calculado arriba para hasErrors
 
     const formatTime = (iso: string) => {
         const d = new Date(iso);
