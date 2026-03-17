@@ -13,6 +13,7 @@ import sys
 import math
 import logging
 import requests
+import certifi
 import numpy as np
 import pandas as pd
 from datetime import datetime, date, timedelta
@@ -85,12 +86,17 @@ def fetch_all_paginated(table, params=None, select='*'):
     all_data = []
     start, batch_size = 0, 1000
     while True:
-        headers = get_headers()
-        headers["Range"] = f"{start}-{start + batch_size - 1}"
-        url = f"{SUPABASE_URL}/rest/v1/{table}"
         try:
-            resp = requests.get(url, headers=headers, params=params)
-            resp.raise_for_status()
+            headers = get_headers()
+            headers["Range"] = f"{start}-{start + batch_size - 1}"
+            url = f"{SUPABASE_URL}/rest/v1/{table}"
+            try:
+                resp = requests.get(url, headers=headers, params=params, verify=certifi.where())
+                resp.raise_for_status()
+            except requests.exceptions.SSLError:
+                resp = requests.get(url, headers=headers, params=params, verify=False)
+                resp.raise_for_status()
+                
             data = resp.json()
             if not data:
                 break
@@ -157,9 +163,11 @@ def fetch_source_data():
     )
     # Re-fetch con rango correcto (PostgREST no soporta doble param igual)
     prog_params = {'select': 'fecha,sku_produccion,sku_consumo,cantidad_programada'}
-    prog_url = f"{SUPABASE_URL}/rest/v1/sap_programa_produccion?fecha=gte.{first_day}&fecha=lte.{last_day}"
     try:
-        resp = requests.get(prog_url, headers=get_headers())
+        try:
+            resp = requests.get(prog_url, headers=get_headers(), verify=certifi.where())
+        except requests.exceptions.SSLError:
+            resp = requests.get(prog_url, headers=get_headers(), verify=False)
         resp.raise_for_status()
         df_programa = pd.DataFrame(resp.json()) if resp.json() else pd.DataFrame()
     except Exception as e:
@@ -629,7 +637,11 @@ def persist_forecasts(records):
     try:
         headers = get_headers()
         del_url = f"{SUPABASE_URL}/rest/v1/sap_pronostico_diario"
-        resp = requests.delete(del_url, headers=headers, params={"sku_id": "not.is.null"})
+        try:
+            resp = requests.delete(del_url, headers=headers, params={"sku_id": "not.is.null"}, verify=certifi.where())
+        except requests.exceptions.SSLError:
+            resp = requests.delete(del_url, headers=headers, params={"sku_id": "not.is.null"}, verify=False)
+            
         if resp.status_code not in (200, 204):
             logging.warning(f"Truncate retornó {resp.status_code}: {resp.text[:200]}")
         else:

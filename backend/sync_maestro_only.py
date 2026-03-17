@@ -14,7 +14,7 @@ logging.basicConfig(
 )
 
 # Path absoluto al Maestro de Artículos
-MAESTRO_FILE_PATH = r"d:/OneDrive - CORPORACIÓN ACEROS AREQUIPA SA/PCP - General/2. CONTROL/COBERTURAS/Maestro de Articulos.xlsx"
+MAESTRO_FILE_PATH = r"D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\Documentos - PCP\General\2. CONTROL\COBERTURAS\Maestro de Articulos.xlsx"
 
 if __name__ == "__main__":
     print("\n--- Sincronizando Únicamente Maestro de Artículos (Lead Time) ---")

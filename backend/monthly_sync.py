@@ -24,17 +24,30 @@ clean_centro_column_name = clean_generic_column
 clean_almacenes_column_name = clean_generic_column
 
 # Absolute path to the Excel files (in OneDrive)
-CONSUMO_FILE_PATH = r"d:/OneDrive - CORPORACIÓN ACEROS AREQUIPA SA/PCP - General/2. CONTROL/ESTADISTICA ANUAL - HISTORICO/Reporte de seguimiento y coberturas/Movimientos/Consumo 2020-2025.xlsx"
-PRODUCCION_FILE_PATH = r"d:/OneDrive - CORPORACIÓN ACEROS AREQUIPA SA/PCP - General/2. CONTROL/ESTADISTICA ANUAL - HISTORICO/Reporte de seguimiento y coberturas/Produccion/Reporte de Producción 2020-2025.xlsx"
-MAESTRO_FILE_PATH = r"d:/OneDrive - CORPORACIÓN ACEROS AREQUIPA SA/PCP - General/2. CONTROL/COBERTURAS/Maestro de Articulos.xlsx"
+BASE_PATH = r"D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\Documentos - PCP\General"
+# Histórico (Masivo)
+CONSUMO_HIST_PATH = os.path.join(BASE_PATH, r"2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Movimientos\Consumo 2020-2025.xlsx")
+PRODUCCION_HIST_PATH = os.path.join(BASE_PATH, r"2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Produccion\Reporte de Producción 2020-2025.xlsx")
+
+# Mensual (Update Incremental)
+CONSUMO_FILE_PATH = os.path.join(BASE_PATH, r"2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Movimientos\ConsumoMes.xlsx")
+PRODUCCION_FILE_PATH = os.path.join(BASE_PATH, r"2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Produccion\ProduccionMes.xlsx")
+
+MAESTRO_FILE_PATH = os.path.join(BASE_PATH, r"2. CONTROL\COBERTURAS\Maestro de Articulos.xlsx")
 
 if __name__ == "__main__":
-    print("=== Iniciando Sincronización Mensual (Histórica) ===")
+    print("=== Iniciando Sincronización Mensual (Histórica + Mensual) ===")
     
-    print("\n--- Syncing Consumo Mensual ---")
+    print("\n--- Syncing Consumo (Histórico) ---")
+    sync_file(CONSUMO_HIST_PATH, is_historical=True)
+    
+    print("\n--- Syncing Consumo (Mensual Incremental) ---")
     sync_file(CONSUMO_FILE_PATH, is_historical=True)
     
-    print("\n--- Syncing Produccion Mensual ---")
+    print("\n--- Syncing Produccion (Histórico) ---")
+    sync_production_file(PRODUCCION_HIST_PATH)
+
+    print("\n--- Syncing Produccion (Mensual Incremental) ---")
     sync_production_file(PRODUCCION_FILE_PATH)
 
     print("\n--- Syncing Maestro Articulos ---")

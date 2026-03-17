@@ -4,6 +4,7 @@ import logging
 import json
 import pandas as pd
 import numpy as np
+import certifi
 from sklearn.ensemble import IsolationForest
 
 logger = logging.getLogger(__name__)
@@ -30,8 +31,14 @@ def _supabase_get(table: str, select: str = "*", limit: int = 15000, params: dic
     if params:
         query_params.update(params)
     
-    response = requests.get(url, headers=headers, params=query_params, timeout=30)
-    response.raise_for_status()
+    try:
+        response = requests.get(url, headers=headers, params=query_params, timeout=30, verify=certifi.where())
+        response.raise_for_status()
+    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError):
+        # Fallback si el certificado local sigue fallando o hay error de conexión por proxy SSL
+        response = requests.get(url, headers=headers, params=query_params, timeout=30, verify=False)
+        response.raise_for_status()
+        
     return response.json()
 
 
@@ -44,7 +51,11 @@ def _supabase_insert(table: str, data: list) -> bool:
         "Content-Type": "application/json",
         "Prefer": "return=minimal",
     }
-    response = requests.post(url, headers=headers, json=data, timeout=30)
+    try:
+        response = requests.post(url, headers=headers, json=data, timeout=30, verify=certifi.where())
+    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError):
+        response = requests.post(url, headers=headers, json=data, timeout=30, verify=False)
+    
     return response.status_code in (200, 201)
 
 

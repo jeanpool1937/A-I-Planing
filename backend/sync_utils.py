@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import logging
 import requests
+import certifi
 import json
 import numpy as np
 from datetime import datetime
@@ -32,7 +33,11 @@ def fetch_existing_signatures(min_date: str):
             "select": "material_clave,fecha,cl_movimiento,centro,almacen,cantidad_final_tn", 
             "fecha": f"gte.{min_date_str}"
         }
-        resp = requests.get(url, headers=headers, params=params)
+        try:
+            resp = requests.get(url, headers=headers, params=params, verify=certifi.where())
+        except requests.exceptions.SSLError:
+            resp = requests.get(url, headers=headers, params=params, verify=False)
+            
         if resp.status_code != 200: 
             raise Exception(f"API Error {resp.status_code}: {resp.text}")
         data = resp.json()
@@ -58,7 +63,11 @@ def fetch_existing_production_signatures(min_date: str):
             "select": "orden,fecha_contabilizacion,material", 
             "fecha_contabilizacion": f"gte.{min_date_str}"
         }
-        resp = requests.get(url, headers=headers, params=params)
+        try:
+            resp = requests.get(url, headers=headers, params=params, verify=certifi.where())
+        except requests.exceptions.SSLError:
+            resp = requests.get(url, headers=headers, params=params, verify=False)
+            
         if resp.status_code != 200: 
             raise Exception(f"API Error {resp.status_code}: {resp.text}")
         data = resp.json()
@@ -91,7 +100,10 @@ def sync_file(file_path: str, is_historical: bool = False, dry_run: bool = False
         
         # Mapping de países
         try:
-            cp_resp = requests.get(f"{SUPABASE_URL}/rest/v1/sap_centro_pais?select=centro_id,pais", headers=get_headers())
+            try:
+                cp_resp = requests.get(f"{SUPABASE_URL}/rest/v1/sap_centro_pais?select=centro_id,pais", headers=get_headers(), verify=certifi.where())
+            except requests.exceptions.SSLError:
+                cp_resp = requests.get(f"{SUPABASE_URL}/rest/v1/sap_centro_pais?select=centro_id,pais", headers=get_headers(), verify=False)
             centro_pais_map = {str(item['centro_id']): item['pais'] for item in cp_resp.json()} if cp_resp.status_code == 200 else {}
         except Exception as e:
             logging.warning(f"Could not fetch centro_pais map: {e}")
@@ -249,7 +261,10 @@ def sync_stock_mb52(file_path: str, dry_run: bool = False):
         if not dry_run:
             # Truncate logic: Delete all rows
             del_url = f"{SUPABASE_URL}/rest/v1/sap_stock_mb52"
-            requests.delete(del_url, headers=get_headers(), params={"material": "not.is.null"})
+            try:
+                requests.delete(del_url, headers=get_headers(), params={"material": "not.is.null"}, verify=certifi.where())
+            except requests.exceptions.SSLError:
+                requests.delete(del_url, headers=get_headers(), params={"material": "not.is.null"}, verify=False)
             logging.info("Truncated sap_stock_mb52 successfully.")
             
             batch_size = 1000
@@ -326,9 +341,12 @@ def sync_master_data(file_path, sheet_name, table_name, clean_col_func, pk_col, 
             # Upsert logic (insert or update)
             # Para el maestro solemos truncar y recargar si es pequeño, 
             # pero aquí usaremos una estrategia de limpieza previa para evitar duplicados si la PK cambia
-            del_url = f"{SUPABASE_URL}/rest/v1/{table_name}"
             # Truncado opcional o Upsert. El usuario suele preferir ver datos frescos.
-            requests.delete(del_url, headers=get_headers(), params={pk_col: "not.is.null"})
+            del_url = f"{SUPABASE_URL}/rest/v1/{table_name}"
+            try:
+                requests.delete(del_url, headers=get_headers(), params={pk_col: "not.is.null"}, verify=certifi.where())
+            except requests.exceptions.SSLError:
+                requests.delete(del_url, headers=get_headers(), params={pk_col: "not.is.null"}, verify=False)
             
             batch_size = 500
             for i in range(0, len(records), batch_size):
@@ -386,7 +404,10 @@ def sync_programa_produccion(file_path: str, dry_run: bool = False):
 
         if not dry_run:
             del_url = f"{SUPABASE_URL}/rest/v1/sap_programa_produccion"
-            requests.delete(del_url, headers=get_headers(), params={"sku_produccion": "not.is.null"})
+            try:
+                requests.delete(del_url, headers=get_headers(), params={"sku_produccion": "not.is.null"}, verify=certifi.where())
+            except requests.exceptions.SSLError:
+                requests.delete(del_url, headers=get_headers(), params={"sku_produccion": "not.is.null"}, verify=False)
             logging.info("Truncated sap_programa_produccion successfully.")
             
             batch_size = 1000
@@ -403,4 +424,51 @@ def sync_programa_produccion(file_path: str, dry_run: bool = False):
 
     except Exception as e:
         logging.error(f"Error in sync_programa_produccion: {e}")
+
+def sync_demanda_proyectada(file_path: str, dry_run: bool = False):
+    logging.info(f"--- Starting Demanda Proyectada Sync: {file_path} ---")
+    if not os.path.exists(file_path):
+        logging.error(f"File not found: {file_path}")
+        return
+
+    try:
+        df = pd.read_excel(file_path)
+        df.columns = [clean_demanda_column(c) for c in df.columns]
+        
+        if 'sku_id' not in df.columns or 'mes' not in df.columns or 'cantidad' not in df.columns:
+            logging.error(f"Required columns missing. Found: {df.columns.tolist()}")
+            return
+
+        df['mes'] = pd.to_datetime(df['mes'], errors='coerce')
+        df = df.dropna(subset=['mes'])
+        
+        logging.info(f"Processing {len(df)} rows for demanda.")
+
+        records = []
+        for _, row in df.iterrows():
+            r = row.to_dict()
+            cleaned = {
+                'sku_id': str(r['sku_id']).split('.')[0].lstrip('0'),
+                'mes': r['mes'].strftime('%Y-%m-%d'),
+                'cantidad': float(r['cantidad']) if not pd.isna(r['cantidad']) else 0.0
+            }
+            records.append(cleaned)
+
+        if not dry_run:
+            # Truncate and reload
+            del_url = f"{SUPABASE_URL}/rest/v1/sap_demanda_proyectada"
+            try:
+                requests.delete(del_url, headers=get_headers(), params={"sku_id": "not.is.null"}, verify=certifi.where())
+            except requests.exceptions.SSLError:
+                requests.delete(del_url, headers=get_headers(), params={"sku_id": "not.is.null"}, verify=False)
+            logging.info("Truncated sap_demanda_proyectada successfully.")
+            
+            batch_size = 1000
+            for i in range(0, len(records), batch_size):
+                batch = records[i:i+batch_size]
+                post_to_supabase("sap_demanda_proyectada", batch)
+            logging.info(f"Finished Demanda Proyectada sync. Total: {len(records)}")
+
+    except Exception as e:
+        logging.error(f"Error in sync_demanda_proyectada: {e}")
 

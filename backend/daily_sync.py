@@ -13,7 +13,7 @@ from agents.forecast_engine import run_forecast
 from agents.anomaly_detector import run_anomaly_audit
 
 # Absolute path to the Excel files (in OneDrive)
-BASE_PATH = r"D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\PCP - General"
+BASE_PATH = r"D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\Documentos - PCP\General"
 CONSUMO_FILE_PATH = os.path.join(BASE_PATH, r"2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Movimientos\ConsumoMes.xlsx")
 PRODUCCION_FILE_PATH = os.path.join(BASE_PATH, r"2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\Produccion\ProduccionMes.xlsx")
 MB52_FILE_PATH = os.path.join(BASE_PATH, r"2. CONTROL\COBERTURAS\MB52.XLSX")

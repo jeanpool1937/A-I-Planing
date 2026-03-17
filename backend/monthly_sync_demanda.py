@@ -21,7 +21,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from sync_utils import sync_demanda_proyectada
 
 # Ruta al archivo PO Histórico en OneDrive
-BASE_PATH = r"D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\PCP - General"
+BASE_PATH = r"D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\Documentos - PCP\General"
 DEMANDA_FILE = os.path.join(BASE_PATH, r"2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\PO Histórico.xlsx")
 
 if __name__ == "__main__":

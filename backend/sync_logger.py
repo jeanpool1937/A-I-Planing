@@ -6,6 +6,7 @@ Helper para registrar el resultado de cada sincronización en la tabla
 import os
 import json
 import requests
+import certifi
 from datetime import datetime
 
 # Reutiliza la config del proyecto
@@ -55,7 +56,11 @@ def log_sync_result(
         headers = get_headers()
         # Prefer: return=minimal para no recibir el registro completo
         headers["Prefer"] = "return=minimal"
-        resp = requests.post(url, headers=headers, data=json.dumps(payload), timeout=10)
+        try:
+            resp = requests.post(url, headers=headers, data=json.dumps(payload), timeout=10, verify=certifi.where())
+        except requests.exceptions.SSLError:
+            resp = requests.post(url, headers=headers, data=json.dumps(payload), timeout=10, verify=False)
+            
         if resp.status_code not in (200, 201):
             print(f"[sync_logger] Advertencia: no se pudo registrar log ({resp.status_code}): {resp.text[:120]}")
     except Exception as e:

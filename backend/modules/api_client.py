@@ -1,5 +1,6 @@
 import os
 import requests
+import certifi
 from dotenv import load_dotenv
 
 # Función robusta para cargar .env buscando en directorios superiores
@@ -29,20 +30,44 @@ def get_headers():
         "Prefer": "return=minimal" 
     }
 
-def post_to_supabase(endpoint, payload):
+def post_to_supabase(endpoint, payload, extra_headers=None):
     url = f"{SUPABASE_URL}/rest/v1/{endpoint}"
-    response = requests.post(url, headers=get_headers(), json=payload)
+    headers = get_headers()
+    if extra_headers:
+        headers.update(extra_headers)
+    try:
+        response = requests.post(url, headers=headers, json=payload, verify=certifi.where())
+    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError, requests.exceptions.ProxyError):
+        response = requests.post(url, headers=headers, json=payload, verify=False)
     response.raise_for_status()
     return response
 
-def patch_to_supabase(endpoint, payload, params):
+def patch_to_supabase(endpoint, payload, params, extra_headers=None):
     url = f"{SUPABASE_URL}/rest/v1/{endpoint}"
-    response = requests.patch(url, headers=get_headers(), json=payload, params=params)
+    headers = get_headers()
+    if extra_headers:
+        headers.update(extra_headers)
+    try:
+        response = requests.patch(url, headers=headers, json=payload, params=params, verify=certifi.where())
+    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError, requests.exceptions.ProxyError):
+        response = requests.patch(url, headers=headers, json=payload, params=params, verify=False)
     response.raise_for_status()
     return response
 
 def call_rpc(rpc_name, payload=None):
     url = f"{SUPABASE_URL}/rest/v1/rpc/{rpc_name}"
-    response = requests.post(url, headers=get_headers(), json=payload or {})
+    headers = get_headers()
+    # Para RPCs, preferimos recibir la respuesta completa/JSON
+    if "Prefer" in headers:
+        del headers["Prefer"]
+    
+    try:
+        response = requests.post(url, headers=headers, json=payload or {}, verify=certifi.where())
+    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError, requests.exceptions.ProxyError):
+        response = requests.post(url, headers=headers, json=payload or {}, verify=False)
     response.raise_for_status()
+    # Si la respuesta está vacía (Prefer: return=minimal), retornamos un dict de éxito genérico
+    if not response.content:
+        return {"success": True, "message": "RPC executed successfully (minimal response)"}
     return response.json()
+

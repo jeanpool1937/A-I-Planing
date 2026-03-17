@@ -102,3 +102,10 @@ def clean_programa_produccion_column(col_name):
     if 'DESCRIPCION' in c: return 'sku_consumo'
     if 'PROGRAMADO' in c: return 'cantidad_programada'
     return c.lower().replace(' ', '_')
+
+def clean_demanda_column(col_name):
+    c = str(col_name).strip().upper()
+    if 'SKU' in c and 'ID' in c: return 'sku_id'
+    if 'MES' in c: return 'mes'
+    if 'CANTIDAD' in c: return 'cantidad'
+    return c.lower().replace(' ', '_')
