@@ -24,7 +24,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BACKEND_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 sys.path.insert(0, BACKEND_DIR)
 
-from modules.api_client import get_headers, SUPABASE_URL, post_to_supabase
+from modules.api_client import get_from_table, post_to_supabase, delete_from_table
 from sync_logger import log_sync_result
 
 # --- Logging ---
@@ -79,35 +79,13 @@ def safe_float(val, default=0.0):
 # =============================================================================
 
 def fetch_all_paginated(table, params=None, select='*'):
-    """Descarga todos los registros de una tabla con paginación automática."""
-    if params is None:
-        params = {}
-    params['select'] = select
-    all_data = []
-    start, batch_size = 0, 1000
-    while True:
-        try:
-            headers = get_headers()
-            headers["Range"] = f"{start}-{start + batch_size - 1}"
-            url = f"{SUPABASE_URL}/rest/v1/{table}"
-            try:
-                resp = requests.get(url, headers=headers, params=params, verify=certifi.where())
-                resp.raise_for_status()
-            except requests.exceptions.SSLError:
-                resp = requests.get(url, headers=headers, params=params, verify=False)
-                resp.raise_for_status()
-                
-            data = resp.json()
-            if not data:
-                break
-            all_data.extend(data)
-            if len(data) < batch_size:
-                break
-            start += batch_size
-        except Exception as e:
-            logging.error(f"Error descargando {table}: {e}")
-            break
-    return pd.DataFrame(all_data) if all_data else pd.DataFrame()
+    """Descarga registros usando el router central (Local/Cloud)."""
+    try:
+        data = get_from_table(table, params=params, select=select, limit=50000)
+        return pd.DataFrame(data) if data else pd.DataFrame()
+    except Exception as e:
+        logging.error(f"Error descargando {table}: {e}")
+        return pd.DataFrame()
 
 
 def fetch_source_data():
@@ -635,17 +613,8 @@ def persist_forecasts(records):
 
     # 1. Truncar tabla existente
     try:
-        headers = get_headers()
-        del_url = f"{SUPABASE_URL}/rest/v1/sap_pronostico_diario"
-        try:
-            resp = requests.delete(del_url, headers=headers, params={"sku_id": "not.is.null"}, verify=certifi.where())
-        except requests.exceptions.SSLError:
-            resp = requests.delete(del_url, headers=headers, params={"sku_id": "not.is.null"}, verify=False)
-            
-        if resp.status_code not in (200, 204):
-            logging.warning(f"Truncate retornó {resp.status_code}: {resp.text[:200]}")
-        else:
-            logging.info("  Tabla truncada exitosamente.")
+        delete_from_table('sap_pronostico_diario', params={"sku_id": "not.is.null"})
+        logging.info("  Tabla truncada exitosamente.")
     except Exception as e:
         logging.error(f"Error truncando tabla: {e}")
 

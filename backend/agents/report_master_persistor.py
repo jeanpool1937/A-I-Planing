@@ -10,7 +10,7 @@ import sys
 # Añadir directorio raíz al path para importar módulos locales
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from modules.api_client import get_headers, SUPABASE_URL, post_to_supabase
+from modules.api_client import get_from_table, post_to_supabase, delete_from_table
 
 # Configuración de Logging
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -25,27 +25,13 @@ logging.basicConfig(
 )
 
 def fetch_all_paginated(table, params={}):
-    all_data = []
-    start, batch_size = 0, 1000
-    while True:
-        headers = get_headers()
-        headers["Range"] = f"{start}-{start + batch_size - 1}"
-        # Construir URL con parámetros
-        url = f"{SUPABASE_URL}/rest/v1/{table}"
-        try:
-            resp = requests.get(url, headers=headers, params=params)
-            resp.raise_for_status()
-            data = resp.json()
-            if not data:
-                break
-            all_data.extend(data)
-            if len(data) < batch_size:
-                break
-            start += batch_size
-        except Exception as e:
-            logging.error(f"Error fetching {table}: {e}")
-            break
-    return pd.DataFrame(all_data)
+    """Usa el router central para obtener datos (soporta Local y Cloud)."""
+    try:
+        data = get_from_table(table, params=params, limit=50000)
+        return pd.DataFrame(data) if data else pd.DataFrame()
+    except Exception as e:
+        logging.error(f"Error fetching {table}: {e}")
+        return pd.DataFrame()
 
 def run_report_persistence():
     logging.info("--- Iniciando persistencia de Reporte Maestro ---")
@@ -174,9 +160,7 @@ def run_report_persistence():
 
         # 4. Actualización en Supabase (Truncate + Insert)
         logging.info("Limpiando tabla sap_reporte_maestro...")
-        headers = get_headers()
-        url_del = f"{SUPABASE_URL}/rest/v1/sap_reporte_maestro"
-        requests.delete(url_del, headers=headers, params={"sku_id": "neq.0"})
+        delete_from_table('sap_reporte_maestro', params={"sku_id": "neq.0"})
         
         logging.info("Insertando nuevos datos consolidado...")
         records = final_df.to_dict(orient='records')

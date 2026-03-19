@@ -52,3 +52,7 @@
 2026-02-17 14:18:30 - INFO - Uploaded demanda batch 43 (1000 records)
 2026-02-17 14:18:31 - INFO - Uploaded demanda batch 44 (275 records)
 2026-02-17 14:18:31 - INFO - Finished demanda sync. Total uploaded: 43275
+2026-03-12 10:14:29 - INFO - --- Starting Demanda Proyectada Sync: D:\OneDrive - CORPORACIÓN ACEROS AREQUIPA SA\Documentos - PCP\General\2. CONTROL\ESTADISTICA ANUAL - HISTORICO\Reporte de seguimiento y coberturas\PO Histórico.xlsx ---
+2026-03-12 10:14:30 - INFO - Processing 43316 rows for demanda.
+2026-03-12 10:14:34 - INFO - Truncated sap_demanda_proyectada successfully.
+2026-03-12 10:15:22 - INFO - Finished Demanda Proyectada sync. Total: 43316

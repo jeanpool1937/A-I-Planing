@@ -1,0 +1,18 @@
+﻿{
+    "ai_anomaly_alerts": 0,
+    "sap_almacenes_comerciales": 177,
+    "sap_centro_pais": 48,
+    "sap_clase_proceso": 108,
+    "sap_consumo_diario_clean": 1000,
+    "sap_consumo_movimientos": 1000,
+    "sap_consumo_sku_mensual": 1000,
+    "sap_demanda_proyectada": 1000,
+    "sap_maestro_articulos": 1000,
+    "sap_plan_inventario_hibrido": 1000,
+    "sap_produccion": 1000,
+    "sap_programa_produccion": 1000,
+    "sap_pronostico_diario": 1000,
+    "sap_reporte_maestro": 1000,
+    "sap_stock_mb52": 1000,
+    "sync_status_log": 116
+}

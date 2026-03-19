@@ -1,0 +1,258 @@
+-- ============================================================
+-- create_local_schema.sql (VERSION CORREGIDA - SCHEMA MATCH)
+-- Esquema exacto de Supabase para PostgreSQL local
+-- ============================================================
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- 1. sap_centro_pais
+CREATE TABLE IF NOT EXISTS sap_centro_pais (
+    centro_id TEXT PRIMARY KEY,
+    descripcion TEXT,
+    pais TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. sap_consumo_movimientos
+CREATE TABLE IF NOT EXISTS sap_consumo_movimientos (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    material_clave TEXT,
+    material_texto TEXT,
+    unidad_medida TEXT,
+    fecha DATE,
+    cl_movimiento TEXT,
+    tipo2 TEXT,
+    cantidad_final_tn NUMERIC(18, 6),
+    centro TEXT,
+    almacen TEXT,
+    source_file TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. sap_produccion
+CREATE TABLE IF NOT EXISTS sap_produccion (
+    id BIGINT PRIMARY KEY,
+    fecha_contabilizacion TIMESTAMPTZ,
+    clase_orden TEXT,
+    orden TEXT,
+    material TEXT,
+    texto_material TEXT,
+    unidad_medida TEXT,
+    cantidad_tn NUMERIC(18, 6),
+    creado_el TIMESTAMPTZ
+);
+
+-- 4. sap_stock_mb52
+CREATE TABLE IF NOT EXISTS sap_stock_mb52 (
+    id BIGINT PRIMARY KEY,
+    material TEXT,
+    texto_material TEXT,
+    centro TEXT,
+    almacen TEXT,
+    tipo_material TEXT,
+    unidad_medida TEXT,
+    libre_utilizacion NUMERIC(18, 6),
+    transito_traslado NUMERIC(18, 6),
+    inspeccion_calidad NUMERIC(18, 6),
+    stock_no_libre NUMERIC(18, 6),
+    bloqueado NUMERIC(18, 6),
+    grupo_articulos TEXT,
+    stock_en_transito NUMERIC(18, 6),
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 5. sap_programa_produccion
+CREATE TABLE IF NOT EXISTS sap_programa_produccion (
+    id BIGINT PRIMARY KEY,
+    fecha DATE,
+    orden_proceso TEXT DEFAULT '0',
+    sku_produccion TEXT,
+    sku_consumo TEXT DEFAULT '0',
+    cantidad_programada NUMERIC(18, 6) DEFAULT 0,
+    clase_proceso TEXT,
+    last_updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 6. sap_demanda_proyectada
+CREATE TABLE IF NOT EXISTS sap_demanda_proyectada (
+    id BIGINT PRIMARY KEY,
+    sku_id TEXT,
+    sku_descripcion TEXT,
+    mes DATE,
+    cantidad NUMERIC(18, 6) DEFAULT 0,
+    org TEXT,
+    mdc TEXT,
+    pais TEXT,
+    j1 TEXT,
+    product_group TEXT,
+    observaciones TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 7. sap_consumo_sku_mensual
+CREATE TABLE IF NOT EXISTS sap_consumo_sku_mensual (
+    sku_id TEXT NOT NULL,
+    mes DATE NOT NULL,
+    tipo2 TEXT NOT NULL,
+    pais TEXT NOT NULL DEFAULT 'Peru',
+    cantidad_total_tn NUMERIC(18, 6) DEFAULT 0,
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    PRIMARY KEY (sku_id, mes, tipo2, pais)
+);
+
+-- 8. sap_consumo_diario_clean
+CREATE TABLE IF NOT EXISTS sap_consumo_diario_clean (
+    id BIGINT PRIMARY KEY,
+    sku_id TEXT,
+    fecha DATE,
+    cantidad_original NUMERIC(18, 6),
+    cantidad_limpia NUMERIC(18, 6),
+    es_outlier BOOLEAN DEFAULT FALSE,
+    es_quiebre_stock BOOLEAN DEFAULT FALSE,
+    metodo_limpieza TEXT,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 9. sap_plan_inventario_hibrido
+CREATE TABLE IF NOT EXISTS sap_plan_inventario_hibrido (
+    sku_id TEXT NOT NULL,
+    pais TEXT NOT NULL DEFAULT 'Peru',
+    descripcion TEXT,
+    familia TEXT,
+    adu_mensual_6m NUMERIC(18, 6) DEFAULT 0,
+    adu_diario_l30d NUMERIC(18, 6) DEFAULT 0,
+    adu_hibrido_final NUMERIC(18, 6) DEFAULT 0,
+    desv_std_diaria NUMERIC(18, 6) DEFAULT 0,
+    factor_fin_mes NUMERIC(18, 6) DEFAULT 1.0,
+    stock_seguridad NUMERIC(18, 6) DEFAULT 0,
+    punto_reorden NUMERIC(18, 6) DEFAULT 0,
+    stock_actual NUMERIC(18, 6) DEFAULT 0,
+    estado_critico BOOLEAN DEFAULT FALSE,
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    abc_segment TEXT,
+    xyz_segment TEXT,
+    turnover_ratio NUMERIC(18, 6) DEFAULT 0,
+    active_months INTEGER DEFAULT 0,
+    rotation_segment TEXT,
+    periodicity_segment TEXT,
+    PRIMARY KEY (sku_id, pais)
+);
+
+-- 10. sap_pronostico_diario
+CREATE TABLE IF NOT EXISTS sap_pronostico_diario (
+    id BIGINT PRIMARY KEY,
+    sku_id TEXT,
+    fecha DATE,
+    tipo TEXT,
+    cantidad_pronosticada NUMERIC(18, 6) DEFAULT 0,
+    metodo_usado TEXT,
+    fuente TEXT DEFAULT 'hibrido',
+    peso_plan NUMERIC(18, 6) DEFAULT 0,
+    peso_historico NUMERIC(18, 6) DEFAULT 0,
+    abc_segment TEXT,
+    xyz_segment TEXT,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 11. sap_reporte_maestro
+CREATE TABLE IF NOT EXISTS sap_reporte_maestro (
+    sku_id TEXT PRIMARY KEY,
+    descripcion TEXT,
+    po_mes_actual NUMERIC(18, 6) DEFAULT 0,
+    coverage_initial NUMERIC(18, 6) DEFAULT 0,
+    stock_inicio_mes NUMERIC(18, 6) DEFAULT 0,
+    real_venta_consumo NUMERIC(18, 6) DEFAULT 0,
+    real_fabricado NUMERIC(18, 6) DEFAULT 0,
+    stock_hoy NUMERIC(18, 6) DEFAULT 0,
+    coverage_actual NUMERIC(18, 6) DEFAULT 0,
+    projected_venta_consumo NUMERIC(18, 6) DEFAULT 0,
+    projected_fabricado NUMERIC(18, 6) DEFAULT 0,
+    stock_fin_mes NUMERIC(18, 6) DEFAULT 0,
+    po_prox_mes NUMERIC(18, 6) DEFAULT 0,
+    coverage_final NUMERIC(18, 6) DEFAULT 0,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 12. ai_anomaly_alerts
+CREATE TABLE IF NOT EXISTS ai_anomaly_alerts (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    detected_at TIMESTAMPTZ DEFAULT NOW(),
+    sku_id TEXT,
+    sku_name TEXT,
+    movement_type TEXT,
+    anomaly_score NUMERIC(18, 6),
+    severity TEXT,
+    expected_value NUMERIC(18, 6),
+    actual_value NUMERIC(18, 6),
+    deviation_pct NUMERIC(18, 6),
+    context_window JSONB,
+    status TEXT DEFAULT 'open',
+    reviewed_by TEXT,
+    review_notes TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 13. sync_status_log
+CREATE TABLE IF NOT EXISTS sync_status_log (
+    id BIGINT PRIMARY KEY,
+    run_date DATE DEFAULT CURRENT_DATE,
+    table_name TEXT,
+    rows_upserted INTEGER DEFAULT 0,
+    status TEXT DEFAULT 'success',
+    error_msg TEXT,
+    executed_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 14. sap_maestro_articulos
+CREATE TABLE IF NOT EXISTS sap_maestro_articulos (
+    codigo TEXT PRIMARY KEY,
+    descripcion_material TEXT,
+    unidad_medida TEXT,
+    jerarquia_nivel_1 TEXT,
+    jerarquia_nivel_2 TEXT,
+    jerarquia_nivel_3 TEXT,
+    grupo_articulos_codigo TEXT,
+    grupo_articulos_descripcion TEXT,
+    tipo_material TEXT,
+    tipo_material_descripcion TEXT,
+    abc TEXT,
+    clase TEXT,
+    agrupacion_comercial TEXT,
+    largo TEXT,
+    stock_seguridad NUMERIC(18, 6),
+    lead_time NUMERIC(18, 6),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 15. sap_clase_proceso
+CREATE TABLE IF NOT EXISTS sap_clase_proceso (
+    clase_proceso TEXT PRIMARY KEY,
+    descripcion_proceso TEXT,
+    area TEXT,
+    plan_inicial NUMERIC(18, 6),
+    centro TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 16. sap_almacenes_comerciales
+CREATE TABLE IF NOT EXISTS sap_almacenes_comerciales (
+    centro TEXT,
+    almacen_id TEXT,
+    descripcion TEXT,
+    status TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    PRIMARY KEY (centro, almacen_id)
+);
+
+-- RPC REFRESH
+CREATE OR REPLACE FUNCTION refresh_inventory_hybrid_plan()
+RETURNS TEXT AS $$
+BEGIN
+    UPDATE sap_plan_inventario_hibrido SET updated_at = NOW();
+    RETURN 'OK';
+END;
+$$ LANGUAGE plpgsql;

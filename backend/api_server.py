@@ -84,19 +84,15 @@ async def cognitive_query(request: QueryRequest):
 
 @app.get("/cognitive/anomalies")
 async def get_anomalies(limit: int = 50):
-    """Obtiene las últimas alertas de anomalías desde Supabase."""
-    import requests as req
-    from dotenv import load_dotenv
-    load_dotenv()
-    url = f"{os.getenv('SUPABASE_URL')}/rest/v1/ai_anomaly_alerts"
-    headers = {
-        "apikey": os.getenv("SUPABASE_KEY"),
-        "Authorization": f"Bearer {os.getenv('SUPABASE_KEY')}",
-    }
-    params = {"select": "*", "limit": limit, "order": "detected_at.desc"}
+    from modules.api_client import get_from_table
     try:
-        response = req.get(url, headers=headers, params=params, timeout=10)
-        return response.json() if response.status_code == 200 else []
+        data = get_from_table(
+            "ai_anomaly_alerts", 
+            select="*", 
+            limit=limit, 
+            order="detected_at.desc"
+        )
+        return data
     except Exception:
         return []
 
@@ -104,20 +100,12 @@ async def get_anomalies(limit: int = 50):
 @app.post("/cognitive/anomalies/action")
 async def anomaly_action(action: AnomalyAction):
     """Actualiza el estado de una alerta de anomalía."""
-    import requests as req
-    from dotenv import load_dotenv
-    load_dotenv()
-    url = f"{os.getenv('SUPABASE_URL')}/rest/v1/ai_anomaly_alerts?id=eq.{action.alert_id}"
-    headers = {
-        "apikey": os.getenv("SUPABASE_KEY"),
-        "Authorization": f"Bearer {os.getenv('SUPABASE_KEY')}",
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal",
-    }
+    from modules.api_client import patch_to_supabase
     payload = {"status": action.status, "review_notes": action.notes}
+    filters = {"id": f"eq.{action.alert_id}"}
     try:
-        response = req.patch(url, headers=headers, json=payload, timeout=10)
-        return {"success": response.status_code in (200, 204)}
+        resp = patch_to_supabase("ai_anomaly_alerts", payload, params=filters)
+        return {"success": resp.status_code in (200, 204)}
     except Exception as e:
         return {"success": False, "error": str(e)}
 

@@ -1,3 +1,3 @@
 @echo off
 cd /d "%~dp0"
-py daily_sync.py
+"C:\Users\EPALLARC\AppData\Local\Python\bin\python3.exe" daily_sync.py
