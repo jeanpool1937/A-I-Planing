@@ -36,8 +36,8 @@ TABLES_TO_MIGRATE = [
     "sap_almacenes_comerciales"
 ]
 
-def get_from_cloud(table, limit=30000):
-    """Lee directamente de la API REST de Supabase ignorando DB_MODE."""
+def get_from_cloud(table, offset=0, limit=1000):
+    """Lee directamente de la API REST de Supabase usando paginación."""
     url = f"{os.getenv('SUPABASE_URL')}/rest/v1/{table}"
     key = os.getenv('SUPABASE_KEY')
     headers = {
@@ -45,7 +45,7 @@ def get_from_cloud(table, limit=30000):
         "Authorization": f"Bearer {key}",
         "Content-Type": "application/json"
     }
-    params = {"select": "*", "limit": limit}
+    params = {"select": "*", "limit": limit, "offset": offset}
     try:
         resp = requests.get(url, headers=headers, params=params, verify=certifi.where())
     except requests.exceptions.SSLError:
@@ -62,17 +62,28 @@ def migrate():
     for table in TABLES_TO_MIGRATE:
         print(f"\nMigrando tabla: {table}...")
         try:
-            # 1. Leer de Supabase directamente
-            data = get_from_cloud(table, limit=50000)
-            if not data:
+            total_migrated = 0
+            offset = 0
+            limit = 1000
+            
+            while True:
+                # 1. Leer de Supabase directamente (paginado)
+                data = get_from_cloud(table, offset=offset, limit=limit)
+                if not data:
+                    break
+                
+                # 2. Escribir en Local usando pg_client directamente
+                pg.post_to_supabase(table, data)
+                
+                total_migrated += len(data)
+                offset += limit
+                
+                print(f"  [DEBUG] Migrados {total_migrated} registros acumulados de la nube...")
+
+            if total_migrated == 0:
                 print(f"  [INFO] Tabla vacía en Supabase. Omitiendo.")
-                continue
-
-            print(f"  [DEBUG] Obtenidos {len(data)} registros de la nube.")
-
-            # 2. Escribir en Local usando pg_client directamente
-            pg.post_to_supabase(table, data)
-            print(f"  [OK] {len(data)} registros migrados a local.")
+            else:
+                print(f"  [OK] TOTAL FINAL: {total_migrated} registros migrados a local para {table}.")
 
         except Exception as e:
             print(f"  [ERROR] Error migrando {table}: {e}")
